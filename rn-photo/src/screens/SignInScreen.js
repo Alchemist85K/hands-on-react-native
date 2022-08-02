@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { Image, StyleSheet, View, Keyboard, ScrollView } from 'react-native';
 import { AuthRoutes } from '../navigations/routes';
 import Input, { ReturnKeyTypes, InputTypes } from '../components/Input';
@@ -26,6 +26,11 @@ const SignInScreen = () => {
     console.log('SignIn Mount');
     return () => console.log('SignIn Unmount');
   }, []);
+
+  useFocusEffect(() => {
+    console.log('Focus');
+    return () => console.log('cleanup Focus');
+  });
 
   useEffect(() => {
     setDisabled(!email || !password);
