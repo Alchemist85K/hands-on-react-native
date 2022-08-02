@@ -1,30 +1,37 @@
-import { Pressable, Text } from 'react-native';
+import { Pressable, StyleSheet, Text } from 'react-native';
 import PropTypes from 'prop-types';
 
-const Button = ({ title }) => {
+const Button = ({ title, onPress, buttonStyle }) => {
   return (
     <Pressable
       style={({ pressed }) => [
-        { backgroundColor: 'red', padding: 20 },
-        pressed && { backgroundColor: 'blue' },
+        styles.button,
+        pressed && { backgroundColor: '#3f3f46' },
+        buttonStyle,
       ]}
-      onPressIn={() => console.log('In')}
-      onPressOut={() => console.log('Out')}
-      onPress={() => console.log('Press')}
-      onLongPress={() => console.log('Long')}
-      delayLongPress={2000}
+      onPressOut={onPress}
     >
-      <Text style={{ color: 'white' }}>{title}</Text>
+      <Text style={styles.title}>{title}</Text>
     </Pressable>
   );
 };
 
-Button.defaultProps = {
-  title: 'button title',
-};
-
 Button.propTypes = {
   title: PropTypes.string.isRequired,
+  onPress: PropTypes.func.isRequired,
+  buttonStyle: PropTypes.object,
 };
+
+const styles = StyleSheet.create({
+  button: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#71717a',
+  },
+  title: {
+    color: '#ffffff',
+    fontSize: 50,
+  },
+});
 
 export default Button;
