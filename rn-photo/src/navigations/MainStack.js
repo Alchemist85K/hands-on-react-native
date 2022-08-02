@@ -12,10 +12,14 @@ const MainStack = () => {
     <Stack.Navigator
       screenOptions={{
         contentStyle: { backgroundColor: WHITE },
-        headerShown: false,
+        title: '',
       }}
     >
-      <Stack.Screen name={MainRoutes.CONTENT_TAB} component={ContentTab} />
+      <Stack.Screen
+        name={MainRoutes.CONTENT_TAB}
+        component={ContentTab}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen
         name={MainRoutes.SELECT_PHOTOS}
         component={SelectPhotosScreen}
