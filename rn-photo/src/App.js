@@ -1,12 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
-import { Text, View } from 'react-native';
+import Navigation from './navigations/Navigation';
 
 const App = () => {
   return (
-    <View style={{ marginTop: 50 }}>
+    <>
       <StatusBar style="dark" />
-      <Text style={{ fontSize: 30 }}>Photo App</Text>
-    </View>
+      <Navigation />
+    </>
   );
 };
 
