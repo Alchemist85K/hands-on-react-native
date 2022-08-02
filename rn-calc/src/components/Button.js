@@ -5,6 +5,10 @@ const Button = ({ title }) => {
   return <Text>{title}</Text>;
 };
 
+Button.defaultProps = {
+  title: 'button title',
+};
+
 Button.propTypes = {
   title: PropTypes.string.isRequired,
 };

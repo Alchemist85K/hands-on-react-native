@@ -8,6 +8,7 @@ const App = () => {
       <StatusBar style="auto" />
       <Text style={styles.text}>Calc App</Text>
       <Button onPress={() => console.log('click!')} color="purple" />
+      <Button title="title" />
     </View>
   );
 };
