@@ -12,7 +12,11 @@ const SignInScreen = () => {
         keyboardType={KeyboardTypes.EMAIL}
         returnKeyType={ReturnKeyTypes.NEXT}
       />
-      <Input title={'비밀번호'} returnKeyType={ReturnKeyTypes.DONE} />
+      <Input
+        title={'비밀번호'}
+        returnKeyType={ReturnKeyTypes.DONE}
+        secureTextEntry
+      />
     </View>
   );
 };
