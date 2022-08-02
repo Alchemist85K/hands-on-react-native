@@ -5,7 +5,7 @@ import { signOut } from '../api/auth';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { GRAY, WHITE } from '../colors';
-import DangerAlert from '../components/DangerAlert';
+import DangerAlert, { AlertTypes } from '../components/DangerAlert';
 import { useState } from 'react';
 
 const ProfileScreen = () => {
@@ -16,7 +16,15 @@ const ProfileScreen = () => {
 
   return (
     <View style={[styles.container, { paddingTop: top }]}>
-      <DangerAlert visible={visible} onClose={() => setVisible(false)} />
+      <DangerAlert
+        visible={visible}
+        onClose={() => setVisible(false)}
+        alertType={AlertTypes.LOGOUT}
+        onConfirm={async () => {
+          await signOut();
+          setUser({});
+        }}
+      />
 
       <View style={styles.settingButton}>
         <Pressable onPress={() => setVisible(true)} hitSlop={10}>
