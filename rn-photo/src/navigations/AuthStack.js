@@ -9,7 +9,10 @@ const Stack = createNativeStackNavigator();
 const AuthStack = () => {
   return (
     <Stack.Navigator
-      screenOptions={{ contentStyle: { backgroundColor: WHITE } }}
+      screenOptions={{
+        contentStyle: { backgroundColor: WHITE },
+        headerShown: false,
+      }}
     >
       <Stack.Screen name={AuthRoutes.SIGN_IN} component={SignInScreen} />
       <Stack.Screen name={AuthRoutes.SIGN_UP} component={SignUpScreen} />
