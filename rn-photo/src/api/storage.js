@@ -1,4 +1,6 @@
-export const uploadPhoto = async ({ uri }) => {
+import { ref, getStorage, uploadBytes } from 'firebase/storage';
+
+export const uploadPhoto = async ({ uri, uid }) => {
   if (uri.startsWith('https')) {
     return uri;
   }
@@ -18,6 +20,10 @@ export const uploadPhoto = async ({ uri }) => {
     xhr.open('GET', uri, true);
     xhr.send(null);
   });
+
+  const filename = uri.split('/').pop();
+  const storageRef = ref(getStorage(), `/${uid}/${filename}`);
+  await uploadBytes(storageRef, blob);
 
   blob.close();
 
