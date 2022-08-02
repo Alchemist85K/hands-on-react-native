@@ -2,7 +2,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import SignInScreen from '../screens/SignInScreen';
 import ListScreen from '../screens/ListScreen';
 import { PRIMARY, WHITE } from '../colors';
-import { Pressable, Text } from 'react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const Stack = createNativeStackNavigator();
 
@@ -13,6 +13,23 @@ const AuthStack = () => {
       screenOptions={{
         contentStyle: { backgroundColor: WHITE },
         headerTitleAlign: 'center',
+        headerTintColor: PRIMARY.DEFAULT,
+        headerTitleStyle: {
+          fontWeight: '700',
+        },
+        headerLeft: ({ canGoBack, tintColor }) => {
+          if (!canGoBack) {
+            return null;
+          }
+
+          return (
+            <MaterialCommunityIcons
+              name="chevron-left"
+              size={30}
+              color={tintColor}
+            />
+          );
+        },
       }}
     >
       <Stack.Screen
@@ -20,10 +37,6 @@ const AuthStack = () => {
         component={ListScreen}
         options={{
           title: 'TODO List',
-          headerTintColor: PRIMARY.DEFAULT,
-          headerTitleStyle: {
-            fontWeight: '700',
-          },
         }}
       />
       <Stack.Screen
