@@ -22,7 +22,8 @@
     "@types/react": "^18.0.15",
     "@types/react-native": "^0.69.5",
     "eslint": "^8.21.0",
-    "eslint-plugin-react": "^7.30.1"
+    "eslint-plugin-react": "^7.30.1",
+    "eslint-plugin-react-hooks": "^4.6.0"
   },
   "private": true
 }
