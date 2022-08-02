@@ -39,14 +39,17 @@ const InputFAB = () => {
 
   useEffect(() => {
     if (Platform.OS === 'ios') {
-      Keyboard.addListener('keyboardWillShow', (e) => {
-        console.log('keyboardWillShow');
+      const show = Keyboard.addListener('keyboardWillShow', (e) => {
         setKeyboardHeight(e.endCoordinates.height + BOTTOM);
       });
-      Keyboard.addListener('keyboardWillHide', () => {
-        console.log('keyboardWillHide');
+      const hide = Keyboard.addListener('keyboardWillHide', () => {
         setKeyboardHeight(BOTTOM);
       });
+
+      return () => {
+        show.remove();
+        hide.remove();
+      };
     }
   }, []);
 
