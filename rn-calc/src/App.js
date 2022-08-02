@@ -7,11 +7,7 @@ const App = () => {
     <View style={styles.container}>
       <StatusBar style="auto" />
       <Text style={styles.text}>Calc App</Text>
-      <Button
-        title="button"
-        onPress={() => console.log('click!')}
-        color="purple"
-      />
+      <Button onPress={() => console.log('click!')} color="purple" />
     </View>
   );
 };
