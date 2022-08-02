@@ -23,6 +23,7 @@ const ListScreen = () => {
         renderItem={({ item }) => <ListItem item={item} />}
         windowSize={5}
         ItemSeparatorComponent={Separator}
+        ListHeaderComponent={() => <View style={{ height: 10 }}></View>}
       />
     </View>
   );
