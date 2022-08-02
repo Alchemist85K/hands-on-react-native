@@ -7,6 +7,7 @@ import { initFirebase } from '../api/firebase';
 import { useUserState } from '../contexts/UserContext';
 import MainStack from './MainStack';
 import { onAuthStateChanged } from '../api/auth';
+import ContentTab from './ContentTab';
 
 const Navigation = () => {
   const [user, setUser] = useUserState();
@@ -49,7 +50,7 @@ const Navigation = () => {
 
   return (
     <NavigationContainer onReady={onReady}>
-      {user.uid ? <MainStack /> : <AuthStack />}
+      {user.uid ? <ContentTab /> : <AuthStack />}
     </NavigationContainer>
   );
 };

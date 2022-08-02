@@ -6,3 +6,10 @@ export const AuthRoutes = {
 export const MainRoutes = {
   PROFILE: 'Profile',
 };
+
+export const ContentRoutes = {
+  HOME: 'Home',
+  LIST: 'List',
+  MAP: 'Map',
+  PROFILE: 'Profile',
+};
