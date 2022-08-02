@@ -2,9 +2,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import SignInScreen from '../screens/SignInScreen';
 import ListScreen from '../screens/ListScreen';
 import { PRIMARY, WHITE } from '../colors';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { Pressable } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import HeaderLeftButton from '../components/HeaderLeftButton';
 
 const Stack = createNativeStackNavigator();
 
@@ -19,23 +17,7 @@ const AuthStack = () => {
         headerTitleStyle: {
           fontWeight: '700',
         },
-        headerLeft: ({ canGoBack, tintColor }) => {
-          const navigation = useNavigation();
-
-          if (!canGoBack) {
-            return null;
-          }
-
-          return (
-            <Pressable onPress={navigation.goBack}>
-              <MaterialCommunityIcons
-                name="chevron-left"
-                size={30}
-                color={tintColor}
-              />
-            </Pressable>
-          );
-        },
+        headerLeft: HeaderLeftButton,
       }}
     >
       <Stack.Screen
