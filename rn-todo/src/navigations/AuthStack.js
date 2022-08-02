@@ -3,6 +3,7 @@ import SignInScreen from '../screens/SignInScreen';
 import ListScreen from '../screens/ListScreen';
 import { PRIMARY, WHITE } from '../colors';
 import HeaderLeftButton from '../components/HeaderLeftButton';
+import HeaderRightButton from '../components/HeaderRightButton';
 
 const Stack = createNativeStackNavigator();
 
@@ -25,6 +26,7 @@ const AuthStack = () => {
         component={ListScreen}
         options={{
           title: 'TODO List',
+          headerRight: HeaderRightButton,
         }}
       />
       <Stack.Screen
