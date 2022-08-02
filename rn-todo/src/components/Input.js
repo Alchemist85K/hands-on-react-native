@@ -23,6 +23,7 @@ const Input = ({ title, placeholder, keyboardType, returnKeyType }) => {
         autoCorrect={false}
         keyboardType={keyboardType}
         returnKeyType={returnKeyType}
+        textContentType="none"
       />
     </View>
   );
