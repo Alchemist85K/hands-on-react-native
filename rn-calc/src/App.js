@@ -7,7 +7,7 @@ const App = () => {
   const [result, setResult] = useState(0);
 
   const windowWidth = useWindowDimensions().width;
-  const width = windowWidth / 4;
+  const width = (windowWidth - 5) / 4;
 
   return (
     <View style={styles.container}>
@@ -19,28 +19,30 @@ const App = () => {
 
       <View style={styles.buttonContainer}>
         <View style={styles.leftPad}>
-          <View style={styles.number}>
-            {/* 숫자 버튼 */}
-            <Button
-              title="1"
-              onPress={() => {}}
-              buttonStyle={{ width, height: width }}
-            />
-            <Button
-              title="2"
-              onPress={() => {}}
-              buttonStyle={{ width, height: width * 2 }}
-            />
-            <Button
-              title="3"
-              onPress={() => {}}
-              buttonStyle={{ width: width * 2, height: width }}
-            />
-          </View>
+          <View style={styles.number}>{/* 숫자 버튼 */}</View>
           <View style={styles.bottom}>{/* 0, = 버튼 */}</View>
         </View>
 
-        <View>{/* 연산 버튼 */}</View>
+        <View>
+          <Button
+            title="C"
+            onPress={() => {}}
+            buttonType={ButtonTypes.OPERATOR}
+            buttonStyle={{ width, height: width, marginTop: 1 }}
+          />
+          <Button
+            title="-"
+            onPress={() => {}}
+            buttonType={ButtonTypes.OPERATOR}
+            buttonStyle={{ width, height: width, marginTop: 1 }}
+          />
+          <Button
+            title="+"
+            onPress={() => {}}
+            buttonType={ButtonTypes.OPERATOR}
+            buttonStyle={{ width, height: width * 2, marginTop: 1 }}
+          />
+        </View>
       </View>
     </View>
   );
