@@ -31,6 +31,7 @@ const Input = ({
         returnKeyType={returnKeyType}
         textContentType="none"
         secureTextEntry={secureTextEntry}
+        keyboardAppearance="light"
       />
     </View>
   );
