@@ -7,6 +7,10 @@ import { useNavigation } from '@react-navigation/native';
 
 const initialListInfo = { endCursor: '', hasNextPage: true };
 
+export const getLocalUri = async (id) => {
+  return (await MediaLibrary.getAssetInfoAsync(id)).localUri;
+};
+
 const ImagePicker = ({ togglePhoto, isSelectedPhoto }) => {
   const navigation = useNavigation();
   const [status, requestPermission] = MediaLibrary.usePermissions();

@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TextInput,
   View,
+  Platform,
 } from 'react-native';
 import { GRAY, WHITE } from '../colors';
 import FastImage from '../components/FastImage';
@@ -16,6 +17,7 @@ import { useLayoutEffect, useEffect, useState, useCallback } from 'react';
 import HeaderRight from '../components/HeaderRight';
 import { updateUserInfo } from '../api/auth';
 import { MainRoutes } from '../navigations/routes';
+import { getLocalUri } from '../components/ImagePicker';
 
 const UpdateProfileScreen = () => {
   const navigation = useNavigation();
@@ -47,18 +49,25 @@ const UpdateProfileScreen = () => {
     if (!disabled) {
       setIsLoading(true);
       try {
-        const userInfo = { displayName };
+        const localUri = Platform.select({
+          ios: await getLocalUri(photo.id),
+          android: photo.uri,
+        });
+        console.log(localUri);
+        setIsLoading(false);
 
-        await updateUserInfo(userInfo);
-        setUser((prev) => ({ ...prev, ...userInfo }));
+        // const userInfo = { displayName };
 
-        navigation.goBack();
+        // await updateUserInfo(userInfo);
+        // setUser((prev) => ({ ...prev, ...userInfo }));
+
+        // navigation.goBack();
       } catch (e) {
         Alert.alert('사용자 수정 실패', e.message);
         setIsLoading(false);
       }
     }
-  }, [disabled, displayName, navigation, setUser]);
+  }, [disabled, displayName, navigation, setUser, photo.id, photo.uri]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
