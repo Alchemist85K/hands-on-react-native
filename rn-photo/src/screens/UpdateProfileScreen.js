@@ -5,11 +5,19 @@ import FastImage from '../components/FastImage';
 import { useUserState } from '../contexts/UserContext';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import SafeInputView from '../components/SafeInputView';
+import { useLayoutEffect } from 'react';
+import HeaderRight from '../components/HeaderRight';
 
 const UpdateProfileScreen = () => {
   const navigation = useNavigation();
 
   const [user] = useUserState();
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => <HeaderRight onPress={() => console.log('right')} />,
+    });
+  }, [navigation]);
 
   return (
     <SafeInputView>
@@ -48,8 +56,8 @@ const UpdateProfileScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
+    paddingTop: 40,
   },
   photo: {
     width: 200,
