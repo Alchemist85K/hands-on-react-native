@@ -10,7 +10,7 @@ import {
   Image,
 } from 'react-native';
 import { MainRoutes } from '../navigations/routes';
-import { GRAY, WHITE } from '../colors';
+import { GRAY, WHITE, BLACK, PRIMARY } from '../colors';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useEffect, useState, useLayoutEffect, useCallback } from 'react';
 import HeaderRight from '../components/HeaderRight';
@@ -71,7 +71,11 @@ const SelectPhotosScreen = () => {
 
       <View style={{ width, height: width }}>
         {photos.length ? (
-          <Swiper>
+          <Swiper
+            loop={false}
+            dot={<View style={styles.dot} />}
+            activeDot={<View style={styles.activeDot} />}
+          >
             {photos.map(({ uri }, idx) => (
               <View key={idx} style={styles.photo}>
                 <Image
@@ -131,6 +135,26 @@ const styles = StyleSheet.create({
   photo: {
     width: '100%',
     height: '100%',
+  },
+  dot: {
+    backgroundColor: BLACK,
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    marginLeft: 3,
+    marginRight: 3,
+    marginTop: 3,
+    marginBottom: 3,
+  },
+  activeDot: {
+    backgroundColor: PRIMARY.DEFAULT,
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    marginLeft: 3,
+    marginRight: 3,
+    marginTop: 3,
+    marginBottom: 3,
   },
 });
 
