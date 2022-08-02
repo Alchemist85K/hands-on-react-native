@@ -8,6 +8,11 @@ const Button = ({ title }) => {
         { backgroundColor: 'red', padding: 20 },
         pressed && { backgroundColor: 'blue' },
       ]}
+      onPressIn={() => console.log('In')}
+      onPressOut={() => console.log('Out')}
+      onPress={() => console.log('Press')}
+      onLongPress={() => console.log('Long')}
+      delayLongPress={2000}
     >
       <Text style={{ color: 'white' }}>{title}</Text>
     </Pressable>
