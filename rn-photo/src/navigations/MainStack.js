@@ -4,6 +4,7 @@ import { MainRoutes } from './routes';
 import ContentTab from './ContentTab';
 import SelectPhotosScreen from '../screens/SelectPhotosScreen';
 import UpdateProfileScreen from '../screens/UpdateProfileScreen';
+import HeaderLeft from '../components/HeaderLeft';
 
 const Stack = createNativeStackNavigator();
 
@@ -13,6 +14,7 @@ const MainStack = () => {
       screenOptions={{
         contentStyle: { backgroundColor: WHITE },
         title: '',
+        headerLeft: HeaderLeft,
       }}
     >
       <Stack.Screen
