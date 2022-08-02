@@ -2,13 +2,23 @@ import { memo } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import PropTypes from 'prop-types';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { DANGER } from '../colors';
+import { DANGER, BLACK, PRIMARY, GRAY } from '../colors';
 
 const ListItem = memo(({ item }) => {
+  const checkboxProps = {
+    name: item.isDone ? 'checkbox-marked' : 'checkbox-blank-outline',
+    color: item.isDone ? PRIMARY.DEFAULT : BLACK,
+    size: 20,
+  };
+
   return (
     <View style={styles.container}>
+      <Pressable onPress={() => {}} hitSlop={10}>
+        <MaterialCommunityIcons {...checkboxProps} />
+      </Pressable>
+
       <View style={styles.task}>
-        <Text>{item.task}</Text>
+        <Text style={item.isDone && { color: GRAY.DEFAULT }}>{item.task}</Text>
       </View>
 
       <Pressable onPress={() => {}} hitSlop={10}>
