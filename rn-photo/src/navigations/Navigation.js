@@ -8,6 +8,13 @@ import { useUserState } from '../contexts/UserContext';
 import MainStack from './MainStack';
 import { onAuthStateChanged } from '../api/auth';
 
+const ImageAssets = [
+  require('../../assets/cover.png'),
+  require('../../assets/home-clock.png'),
+  require('../../assets/home-map.png'),
+  require('../../assets/icon.png'),
+];
+
 const Navigation = () => {
   const [user, setUser] = useUserState();
   const [isReady, setIsReady] = useState(false);
@@ -16,9 +23,10 @@ const Navigation = () => {
     (async () => {
       try {
         await SplashScreen.preventAutoHideAsync();
-        await Asset.fromModule(
-          require('../../assets/cover.png')
-        ).downloadAsync();
+
+        await Promise.all(
+          ImageAssets.map((image) => Asset.fromModule(image).downloadAsync())
+        );
 
         initFirebase();
 
