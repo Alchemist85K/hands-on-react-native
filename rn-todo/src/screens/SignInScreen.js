@@ -12,7 +12,7 @@ import { signIn } from '../api/auth';
 import PropTypes from 'prop-types';
 import UserContext from '../contexts/UserContext';
 
-const SignInScreen = ({ setUser }) => {
+const SignInScreen = () => {
   const insets = useSafeAreaInsets();
 
   const [email, setEmail] = useState('');
@@ -25,7 +25,7 @@ const SignInScreen = ({ setUser }) => {
     setDisabled(!email || !password);
   }, [email, password]);
 
-  const onSubmit = async () => {
+  const onSubmit = async (setUser) => {
     if (!isLoading && !disabled) {
       try {
         setIsLoading(true);
@@ -43,55 +43,51 @@ const SignInScreen = ({ setUser }) => {
 
   return (
     <UserContext.Consumer>
-      {(value) => {
-        console.log(value);
+      {({ setUser }) => (
+        <SafeInputView>
+          <View
+            style={[
+              styles.container,
+              { paddingTop: insets.top, paddingBottom: insets.bottom },
+            ]}
+          >
+            <Image
+              source={require('../../assets/main.png')}
+              style={styles.image}
+            />
 
-        return (
-          <SafeInputView>
-            <View
-              style={[
-                styles.container,
-                { paddingTop: insets.top, paddingBottom: insets.bottom },
-              ]}
-            >
-              <Image
-                source={require('../../assets/main.png')}
-                style={styles.image}
-              />
+            <Input
+              title={'이메일'}
+              placeholder="your@email.com"
+              keyboardType={KeyboardTypes.EMAIL}
+              returnKeyType={ReturnKeyTypes.NEXT}
+              value={email}
+              onChangeText={(email) => setEmail(email.trim())}
+              iconName={IconNames.EMAIL}
+              onSubmitEditing={() => passwordRef.current.focus()}
+            />
+            <Input
+              ref={passwordRef}
+              title={'비밀번호'}
+              returnKeyType={ReturnKeyTypes.DONE}
+              secureTextEntry
+              value={password}
+              onChangeText={(password) => setPassword(password.trim())}
+              iconName={IconNames.PASSWORD}
+              onSubmitEditing={() => onSubmit(setUser)}
+            />
 
-              <Input
-                title={'이메일'}
-                placeholder="your@email.com"
-                keyboardType={KeyboardTypes.EMAIL}
-                returnKeyType={ReturnKeyTypes.NEXT}
-                value={email}
-                onChangeText={(email) => setEmail(email.trim())}
-                iconName={IconNames.EMAIL}
-                onSubmitEditing={() => passwordRef.current.focus()}
+            <View style={styles.buttonContainer}>
+              <Button
+                title="로그인"
+                onPress={() => onSubmit(setUser)}
+                disabled={disabled}
+                isLoading={isLoading}
               />
-              <Input
-                ref={passwordRef}
-                title={'비밀번호'}
-                returnKeyType={ReturnKeyTypes.DONE}
-                secureTextEntry
-                value={password}
-                onChangeText={(password) => setPassword(password.trim())}
-                iconName={IconNames.PASSWORD}
-                onSubmitEditing={onSubmit}
-              />
-
-              <View style={styles.buttonContainer}>
-                <Button
-                  title="로그인"
-                  onPress={onSubmit}
-                  disabled={disabled}
-                  isLoading={isLoading}
-                />
-              </View>
             </View>
-          </SafeInputView>
-        );
-      }}
+          </View>
+        </SafeInputView>
+      )}
     </UserContext.Consumer>
   );
 };
