@@ -19,11 +19,14 @@ const SignInScreen = () => {
     setDisabled(!email || !password);
   }, [email, password]);
 
-  const onSubmit = () => {
-    Keyboard.dismiss();
-    signIn(email, password)
-      .then((data) => console.log(data))
-      .catch((error) => console.log(error));
+  const onSubmit = async () => {
+    try {
+      Keyboard.dismiss();
+      const data = await signIn(email, password);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
