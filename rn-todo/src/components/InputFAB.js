@@ -2,16 +2,17 @@ import {
   Pressable,
   StyleSheet,
   TextInput,
-  View,
   useWindowDimensions,
   Keyboard,
   Platform,
+  Animated,
 } from 'react-native';
 import { BLACK, PRIMARY, WHITE } from '../colors';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useEffect, useRef, useState } from 'react';
 
 const BOTTOM = 30;
+const BUTTON_WIDTH = 60;
 
 const InputFAB = () => {
   const [text, setText] = useState('');
@@ -20,16 +21,30 @@ const InputFAB = () => {
   const windowWidth = useWindowDimensions().width;
   const [keyboardHeight, setKeyboardHeight] = useState(BOTTOM);
 
+  const inputWidth = useRef(new Animated.Value(BUTTON_WIDTH)).current;
+
   const open = () => {
-    inputRef.current.focus();
     setIsOpened(true);
+    Animated.timing(inputWidth, {
+      toValue: windowWidth - 20,
+      useNativeDriver: false,
+      duration: 300,
+    }).start(() => {
+      inputRef.current.focus();
+    });
   };
 
   const close = () => {
     if (isOpened) {
-      inputRef.current.blur();
       setText('');
       setIsOpened(false);
+      Animated.timing(inputWidth, {
+        toValue: BUTTON_WIDTH,
+        useNativeDriver: false,
+        duration: 300,
+      }).start(() => {
+        inputRef.current.blur();
+      });
     }
   };
 
@@ -55,13 +70,16 @@ const InputFAB = () => {
 
   return (
     <>
-      <View
+      <Animated.View
         style={[
           styles.position,
           styles.shape,
           styles.shadow,
-          { justifyContent: 'center', bottom: keyboardHeight },
-          isOpened && { width: windowWidth - 20 },
+          {
+            justifyContent: 'center',
+            bottom: keyboardHeight,
+            width: inputWidth,
+          },
         ]}
       >
         <TextInput
@@ -76,7 +94,7 @@ const InputFAB = () => {
           keyboardAppearance="light"
           returnKeyType="done"
         />
-      </View>
+      </Animated.View>
 
       <Pressable
         style={({ pressed }) => [
@@ -101,15 +119,15 @@ const styles = StyleSheet.create({
     right: 10,
   },
   shape: {
-    height: 60,
-    width: 60,
-    borderRadius: 30,
+    height: BUTTON_WIDTH,
+    width: BUTTON_WIDTH,
+    borderRadius: BUTTON_WIDTH / 2,
     backgroundColor: PRIMARY.DEFAULT,
   },
   input: {
     color: WHITE,
     paddingLeft: 20,
-    paddingRight: 70,
+    paddingRight: BUTTON_WIDTH + 10,
   },
   button: {
     justifyContent: 'center',
