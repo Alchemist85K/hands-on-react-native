@@ -20,7 +20,24 @@ const App = () => {
       <View style={styles.buttonContainer}>
         <View style={styles.leftPad}>
           <View style={styles.number}>{/* 숫자 버튼 */}</View>
-          <View style={styles.bottom}>{/* 0, = 버튼 */}</View>
+          <View style={styles.bottom}>
+            <Button
+              title="0"
+              onPress={() => {}}
+              buttonType={ButtonTypes.NUMBER}
+              buttonStyle={{
+                width: width * 2,
+                height: width,
+                marginTop: 1,
+              }}
+            />
+            <Button
+              title="="
+              onPress={() => {}}
+              buttonType={ButtonTypes.OPERATOR}
+              buttonStyle={{ width, height: width, marginTop: 1 }}
+            />
+          </View>
         </View>
 
         <View>
@@ -71,10 +88,17 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     backgroundColor: '#A5B4FC',
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
   },
-  leftPad: {},
+  leftPad: {
+    width: '75%',
+  },
   number: {},
-  bottom: {},
+  bottom: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+  },
 });
 
 export default App;
