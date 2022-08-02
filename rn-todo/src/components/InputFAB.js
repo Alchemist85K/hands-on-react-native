@@ -7,7 +7,7 @@ import {
   Keyboard,
   Platform,
 } from 'react-native';
-import { PRIMARY, WHITE } from '../colors';
+import { BLACK, PRIMARY, WHITE } from '../colors';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useEffect, useRef, useState } from 'react';
 
@@ -59,6 +59,7 @@ const InputFAB = () => {
         style={[
           styles.position,
           styles.shape,
+          styles.shadow,
           { justifyContent: 'center', bottom: keyboardHeight },
           isOpened && { width: windowWidth - 20 },
         ]}
@@ -113,6 +114,17 @@ const styles = StyleSheet.create({
   button: {
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  shadow: {
+    shadowColor: BLACK,
+    ...Platform.select({
+      ios: {
+        shadowOffset: { width: 2, height: 4 },
+        shadowOpacity: 0.5,
+        shadowRadius: 5,
+      },
+      android: { elevation: 5 },
+    }),
   },
 });
 
