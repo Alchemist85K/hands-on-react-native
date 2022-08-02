@@ -68,7 +68,6 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
   buttonContainer: {
-    flex: 1,
     backgroundColor: '#A5B4FC',
   },
   leftPad: {},
