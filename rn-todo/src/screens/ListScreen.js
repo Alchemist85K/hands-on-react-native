@@ -4,13 +4,14 @@ import EmptyList from '../components/EmptyList';
 import List from '../components/List';
 import InputFAB from '../components/InputFAB';
 import { useState } from 'react';
+import { nanoid } from 'nanoid';
 
 const ListScreen = () => {
   const { bottom } = useSafeAreaInsets();
   const [todos, setTodos] = useState([]);
 
   const onInsert = (task) => {
-    const id = Date.now().toString();
+    const id = nanoid();
     setTodos((prev) => [{ id, task, isDone: false }, ...prev]);
   };
 
