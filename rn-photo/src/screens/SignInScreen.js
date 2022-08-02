@@ -59,9 +59,13 @@ const SignInScreen = () => {
         setUser(user);
       } catch (e) {
         const message = getAuthErrorMessages(e.code);
-        Alert.alert('로그인 실패', message);
+        Alert.alert('로그인 실패', message, [
+          {
+            text: '확인',
+            onPress: () => dispatch({ type: AuthFormTypes.TOGGLE_LOADING }),
+          },
+        ]);
       }
-      dispatch({ type: AuthFormTypes.TOGGLE_LOADING });
     }
   };
 
