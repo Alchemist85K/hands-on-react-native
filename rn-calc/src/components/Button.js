@@ -1,7 +1,7 @@
 import { Text } from 'react-native';
 
-const Button = () => {
-  return <Text>My Button</Text>;
+const Button = ({ title }) => {
+  return <Text>{title}</Text>;
 };
 
 export default Button;
