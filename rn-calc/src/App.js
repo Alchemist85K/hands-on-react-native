@@ -6,6 +6,10 @@ import { useState } from 'react';
 const App = () => {
   const [result, setResult] = useState(0);
 
+  const onPressNumber = (number) => {
+    setResult((prev) => prev * 10 + number);
+  };
+
   const windowWidth = useWindowDimensions().width;
   const width = (windowWidth - 5) / 4;
 
@@ -24,7 +28,7 @@ const App = () => {
               <Button
                 key={num}
                 title={num.toString()}
-                onPress={() => {}}
+                onPress={() => onPressNumber(num)}
                 buttonStyle={{ width, height: width, marginBottom: 1 }}
               />
             ))}
@@ -32,7 +36,7 @@ const App = () => {
           <View style={styles.bottom}>
             <Button
               title="0"
-              onPress={() => {}}
+              onPress={() => onPressNumber(0)}
               buttonType={ButtonTypes.NUMBER}
               buttonStyle={{
                 width: width * 2,
