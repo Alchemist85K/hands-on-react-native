@@ -1,5 +1,6 @@
 import {
   AuthErrorCodes,
+  createUserWithEmailAndPassword,
   getAuth,
   signInWithEmailAndPassword,
 } from 'firebase/auth';
@@ -19,5 +20,14 @@ export const getAuthErrorMessages = (errorCode) => {
 
 export const signIn = async ({ email, password }) => {
   const { user } = await signInWithEmailAndPassword(getAuth(), email, password);
+  return user;
+};
+
+export const signUp = async ({ email, password }) => {
+  const { user } = await createUserWithEmailAndPassword(
+    getAuth(),
+    email,
+    password
+  );
   return user;
 };
