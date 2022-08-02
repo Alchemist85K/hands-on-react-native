@@ -17,6 +17,14 @@ const List = ({ data }) => {
       ItemSeparatorComponent={Separator}
       ListHeaderComponent={View}
       ListHeaderComponentStyle={{ height: 10 }}
+      onScroll={({
+        nativeEvent: { contentOffset, layoutMeasurement, contentSize },
+      }) => {
+        console.log(
+          'from bottom: ',
+          contentSize.height - (contentOffset.y + layoutMeasurement.height)
+        );
+      }}
     />
   );
 };
