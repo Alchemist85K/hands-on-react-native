@@ -1,6 +1,7 @@
 import { FlatList, StyleSheet, View } from 'react-native';
 import ListItem from '../components/ListItem';
 import { GRAY } from '../colors';
+import EmptyList from '../components/EmptyList';
 
 const Separator = () => {
   return <View style={styles.separator}></View>;
@@ -9,7 +10,7 @@ const Separator = () => {
 const ListScreen = () => {
   const todos = [];
 
-  return (
+  return todos.length ? (
     <View style={styles.container}>
       <FlatList
         data={todos}
@@ -20,6 +21,8 @@ const ListScreen = () => {
         ListHeaderComponent={() => <View style={{ height: 10 }}></View>}
       />
     </View>
+  ) : (
+    <EmptyList />
   );
 };
 
