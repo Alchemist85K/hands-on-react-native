@@ -5,7 +5,20 @@ const App = () => {
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
-      <Text>Calc App</Text>
+      <Text
+        style={{
+          fontSize: 30,
+          fontWeight: '700',
+          color: 'green',
+          backgroundColor: 'yellow',
+          borderWidth: 1,
+          borderColor: 'blue',
+          paddingHorizontal: 20,
+          paddingVertical: 10,
+        }}
+      >
+        Calc App
+      </Text>
     </View>
   );
 };
