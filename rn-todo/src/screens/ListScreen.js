@@ -7,13 +7,7 @@ const Separator = () => {
 };
 
 const ListScreen = () => {
-  const todos = [
-    { id: 1, task: 'React Native', isDone: false },
-    { id: 2, task: 'FlatList', isDone: false },
-    { id: 3, task: 'React Navigation', isDone: true },
-    { id: 4, task: 'TODO App', isDone: false },
-    { id: 5, task: 'React.memo', isDone: true },
-  ];
+  const todos = [];
 
   return (
     <View style={styles.container}>
