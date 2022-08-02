@@ -19,6 +19,7 @@ const ListScreen = () => {
             </View>
           );
         }}
+        windowSize={5}
       />
     </View>
   );
