@@ -6,7 +6,12 @@ export const KeyboardTypes = {
   EMAIL: 'email-address',
 };
 
-const Input = ({ title, placeholder, keyboardType }) => {
+export const ReturnKeyTypes = {
+  DONE: 'done',
+  NEXT: 'next',
+};
+
+const Input = ({ title, placeholder, keyboardType, returnKeyType }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{title}</Text>
@@ -17,6 +22,7 @@ const Input = ({ title, placeholder, keyboardType }) => {
         autoCapitalize="none"
         autoCorrect={false}
         keyboardType={keyboardType}
+        returnKeyType={returnKeyType}
       />
     </View>
   );
@@ -24,12 +30,14 @@ const Input = ({ title, placeholder, keyboardType }) => {
 
 Input.defaultProps = {
   keyboardType: KeyboardTypes.DEFAULT,
+  returnKeyType: ReturnKeyTypes.DONE,
 };
 
 Input.propTypes = {
   title: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   keyboardType: PropTypes.oneOf(Object.values(KeyboardTypes)),
+  returnKeyType: PropTypes.oneOf(Object.values(ReturnKeyTypes)),
 };
 
 const styles = StyleSheet.create({
