@@ -16,6 +16,10 @@ const App = () => {
       <View style={styles.buttonContainer}>
         <Text>Button</Text>
       </View>
+
+      <View style={{ flex: 2, backgroundColor: '#e3e3e3' }}>
+        <Text>component</Text>
+      </View>
     </View>
   );
 };
@@ -33,9 +37,11 @@ const styles = StyleSheet.create({
     color: '#ffffff',
   },
   resultContainer: {
+    height: 100,
     backgroundColor: '#000000',
   },
   buttonContainer: {
+    height: 100,
     backgroundColor: '#A5B4FC',
   },
 });
