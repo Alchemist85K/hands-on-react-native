@@ -5,9 +5,21 @@ import { useState } from 'react';
 
 const App = () => {
   const [result, setResult] = useState(0);
+  const [formula, setFormula] = useState([]);
 
   const onPressNumber = (number) => {
-    setResult((prev) => prev * 10 + number);
+    const last = formula[formula.length - 1];
+    if (isNaN(last)) {
+      setResult(number);
+      setFormula((prev) => [...prev, number]);
+    } else {
+      const newNumber = (last ?? 0) * 10 + number;
+      setResult(newNumber);
+      setFormula((prev) => {
+        prev.pop();
+        return [...prev, newNumber];
+      });
+    }
   };
 
   const windowWidth = useWindowDimensions().width;
