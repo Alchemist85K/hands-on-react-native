@@ -35,7 +35,6 @@ const UpdateProfileScreen = () => {
     if (params) {
       const { selectedPhotos } = params;
       if (selectedPhotos?.length) {
-        console.log('selectedPhotos: ', selectedPhotos[0]);
         setPhoto(selectedPhotos[0]);
       }
     }
@@ -58,7 +57,6 @@ const UpdateProfileScreen = () => {
           uri: localUri,
           uid: user.uid,
         });
-        console.log(photoURL);
 
         const userInfo = { displayName, photoURL };
 
