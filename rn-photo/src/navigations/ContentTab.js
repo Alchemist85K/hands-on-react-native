@@ -9,7 +9,11 @@ const Tab = createBottomTabNavigator();
 
 const ContentTab = () => {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
       <Tab.Screen name={ContentRoutes.HOME} component={HomeScreen} />
       <Tab.Screen name={ContentRoutes.LIST} component={ListScreen} />
       <Tab.Screen name={ContentRoutes.MAP} component={MapScreen} />
