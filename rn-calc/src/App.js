@@ -1,5 +1,4 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar, StyleSheet, Text, View } from 'react-native';
 import Button, { ButtonTypes } from './components/Button';
 import { useState } from 'react';
 
@@ -8,7 +7,8 @@ const App = () => {
 
   return (
     <View style={styles.container}>
-      <StatusBar style="auto" />
+      <StatusBar barStyle="light-content" backgroundColor={'blue'} />
+
       <View style={styles.resultContainer}>
         <Text style={styles.text}>{result}</Text>
       </View>
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
   },
   resultContainer: {
     flex: 1,
-    backgroundColor: '#000000',
+    backgroundColor: '#ffffff',
     justifyContent: 'flex-end',
     alignItems: 'flex-end',
   },
