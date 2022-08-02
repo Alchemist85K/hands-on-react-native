@@ -16,6 +16,7 @@ import { useEffect, useState, useLayoutEffect, useCallback } from 'react';
 import HeaderRight from '../components/HeaderRight';
 import { getLocalUri } from '../components/ImagePicker';
 import Swiper from 'react-native-swiper';
+import { BlurView } from 'expo-blur';
 
 const SelectPhotosScreen = () => {
   const navigation = useNavigation();
@@ -72,12 +73,23 @@ const SelectPhotosScreen = () => {
         {photos.length ? (
           <Swiper>
             {photos.map(({ uri }, idx) => (
-              <Image
-                key={idx}
-                source={{ uri }}
-                style={styles.photo}
-                resizeMode="contain"
-              />
+              <View key={idx} style={styles.photo}>
+                <Image
+                  source={{ uri }}
+                  style={StyleSheet.absoluteFill}
+                  resizeMode="cover"
+                />
+                <BlurView
+                  intensity={Platform.select({ ios: 10, android: 100 })}
+                >
+                  <Image
+                    key={idx}
+                    source={{ uri }}
+                    style={styles.photo}
+                    resizeMode="contain"
+                  />
+                </BlurView>
+              </View>
             ))}
           </Swiper>
         ) : (
