@@ -1,5 +1,6 @@
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 import PropTypes from 'prop-types';
+import { GRAY } from '../colors';
 
 export const KeyboardTypes = {
   DEFAULT: 'default',
@@ -19,7 +20,7 @@ const Input = ({ title, placeholder, ...props }) => {
         {...props}
         style={styles.input}
         placeholder={placeholder ?? title}
-        placeholderTextColor={'#a3a3a3'}
+        placeholderTextColor={GRAY.DEFAULT}
         autoCapitalize="none"
         autoCorrect={false}
         textContentType="none"
