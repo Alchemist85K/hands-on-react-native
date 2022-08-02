@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import {
   Alert,
   Keyboard,
@@ -19,6 +19,8 @@ import { MainRoutes } from '../navigations/routes';
 
 const UpdateProfileScreen = () => {
   const navigation = useNavigation();
+  const route = useRoute();
+  console.log(route.params);
 
   const [user, setUser] = useUserState();
 
