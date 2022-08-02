@@ -18,13 +18,16 @@ import {
 import HeaderRight from '../components/HeaderRight';
 import * as MediaLibrary from 'expo-media-library';
 
+const initialListInfo = { endCursor: '', hasNextPage: true };
+
 const ImagePickerScreen = () => {
   const navigation = useNavigation();
   const [status, requestPermission] = MediaLibrary.usePermissions();
 
   const width = useWindowDimensions().width / 3;
   const [photos, setPhotos] = useState([]);
-  const listInfo = useRef({ endCursor: '', hasNextPage: true });
+  const listInfo = useRef(initialListInfo);
+  const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -55,12 +58,17 @@ const ImagePickerScreen = () => {
     if (listInfo.current.hasNextPage) {
       const { assets, endCursor, hasNextPage } =
         await MediaLibrary.getAssetsAsync(options);
-      setPhotos((prev) => [...prev, ...assets]);
+      setPhotos((prev) => (options.after ? [...prev, ...assets] : assets));
       listInfo.current = { endCursor, hasNextPage };
     }
   }, []);
 
-  console.log(photos.length);
+  const onRefresh = async () => {
+    setRefreshing(true);
+    listInfo.current = initialListInfo;
+    await getPhotos();
+    setRefreshing(false);
+  };
 
   useEffect(() => {
     if (status?.granted) {
@@ -87,6 +95,8 @@ const ImagePickerScreen = () => {
         numColumns={3}
         onEndReached={getPhotos}
         onEndReachedThreshold={0.4}
+        onRefresh={onRefresh}
+        refreshing={refreshing}
       />
     </View>
   );
