@@ -7,16 +7,14 @@ import {
   Pressable,
   Alert,
   Platform,
-  Image,
 } from 'react-native';
 import { MainRoutes } from '../navigations/routes';
-import { GRAY, WHITE, BLACK, PRIMARY } from '../colors';
+import { GRAY, WHITE } from '../colors';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useEffect, useState, useLayoutEffect, useCallback } from 'react';
 import HeaderRight from '../components/HeaderRight';
 import { getLocalUri } from '../components/ImagePicker';
-import Swiper from 'react-native-swiper';
-import { BlurView } from 'expo-blur';
+import ImageSwiper from '../components/ImageSwiper';
 
 const SelectPhotosScreen = () => {
   const navigation = useNavigation();
@@ -71,31 +69,7 @@ const SelectPhotosScreen = () => {
 
       <View style={{ width, height: width }}>
         {photos.length ? (
-          <Swiper
-            loop={false}
-            dot={<View style={styles.dot} />}
-            activeDot={<View style={styles.activeDot} />}
-          >
-            {photos.map(({ uri }, idx) => (
-              <View key={idx} style={styles.photo}>
-                <Image
-                  source={{ uri }}
-                  style={StyleSheet.absoluteFill}
-                  resizeMode="cover"
-                />
-                <BlurView
-                  intensity={Platform.select({ ios: 10, android: 100 })}
-                >
-                  <Image
-                    key={idx}
-                    source={{ uri }}
-                    style={styles.photo}
-                    resizeMode="contain"
-                  />
-                </BlurView>
-              </View>
-            ))}
-          </Swiper>
+          <ImageSwiper photos={photos} />
         ) : (
           <Pressable
             style={styles.photoButton}
@@ -131,30 +105,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: GRAY.LIGHT,
-  },
-  photo: {
-    width: '100%',
-    height: '100%',
-  },
-  dot: {
-    backgroundColor: BLACK,
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    marginLeft: 3,
-    marginRight: 3,
-    marginTop: 3,
-    marginBottom: 3,
-  },
-  activeDot: {
-    backgroundColor: PRIMARY.DEFAULT,
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    marginLeft: 3,
-    marginRight: 3,
-    marginTop: 3,
-    marginBottom: 3,
   },
 });
 
