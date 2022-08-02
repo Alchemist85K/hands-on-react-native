@@ -1,18 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
-import { NavigationContainer } from '@react-navigation/native';
-import AuthStack from './navigations/AuthStack';
-import MainStack from './navigations/MainStack';
-import UserContext, { UserProvider } from './contexts/UserContext';
+import { UserProvider } from './contexts/UserContext';
+import Navigation from './navigations/Navigation';
 
 const App = () => {
   return (
     <UserProvider>
-      <NavigationContainer>
-        <StatusBar style="dark" />
-        <UserContext.Consumer>
-          {({ user }) => (user ? <MainStack /> : <AuthStack />)}
-        </UserContext.Consumer>
-      </NavigationContainer>
+      <StatusBar style="dark" />
+      <Navigation />
     </UserProvider>
   );
 };
