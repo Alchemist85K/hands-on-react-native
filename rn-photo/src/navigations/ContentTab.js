@@ -21,6 +21,7 @@ const ContentTab = () => {
         headerShown: false,
         tabBarActiveTintColor: PRIMARY.DARK,
         tabBarInactiveTintColor: GRAY.DARK,
+        tabBarShowLabel: false,
       }}
     >
       <Tab.Screen
@@ -28,6 +29,7 @@ const ContentTab = () => {
         component={HomeScreen}
         options={{
           tabBarIcon: (props) => getTabBarIcon({ ...props, name: 'home' }),
+          tabBarLabel: '홈',
         }}
       />
       <Tab.Screen
