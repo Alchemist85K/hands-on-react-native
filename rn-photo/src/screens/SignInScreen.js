@@ -23,6 +23,11 @@ const SignInScreen = () => {
   const [disabled, setDisabled] = useState(true);
 
   useEffect(() => {
+    console.log('SignIn Mount');
+    return () => console.log('SignIn Unmount');
+  }, []);
+
+  useEffect(() => {
     setDisabled(!email || !password);
   }, [email, password]);
 

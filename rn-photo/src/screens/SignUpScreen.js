@@ -11,6 +11,11 @@ import { StatusBar } from 'expo-status-bar';
 import { WHITE } from '../colors';
 
 const SignUpScreen = () => {
+  useEffect(() => {
+    console.log('SignUp Mount');
+    return () => console.log('SignUp Unmount');
+  }, []);
+
   const navigation = useNavigation();
   const { top, bottom } = useSafeAreaInsets();
 
