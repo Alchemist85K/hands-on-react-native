@@ -1,28 +1,61 @@
 import { useNavigation } from '@react-navigation/native';
-import { Button, Pressable, StyleSheet, TextInput, View } from 'react-native';
+import {
+  Alert,
+  Keyboard,
+  Pressable,
+  StyleSheet,
+  TextInput,
+  View,
+} from 'react-native';
 import { GRAY, WHITE } from '../colors';
 import FastImage from '../components/FastImage';
 import { useUserState } from '../contexts/UserContext';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import SafeInputView from '../components/SafeInputView';
-import { useLayoutEffect } from 'react';
+import { useLayoutEffect, useEffect, useState } from 'react';
 import HeaderRight from '../components/HeaderRight';
+import { updateUserInfo } from '../api/auth';
 
 const UpdateProfileScreen = () => {
   const navigation = useNavigation();
 
-  const [user] = useUserState();
+  const [user, setUser] = useUserState();
+
+  const [displayName, setDisplayName] = useState(user.displayName);
+  const [disabled, setDisabled] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    setDisabled(!displayName || isLoading);
+  }, [displayName, isLoading]);
+
+  const onSubmit = async () => {
+    Keyboard.dismiss();
+    if (!disabled) {
+      setIsLoading(true);
+      try {
+        const userInfo = { displayName };
+
+        await updateUserInfo(userInfo);
+        setUser((prev) => ({ ...prev, ...userInfo }));
+
+        navigation.goBack();
+      } catch (e) {
+        Alert.alert('사용자 수정 실패', e.message);
+        setIsLoading(false);
+      }
+    }
+  };
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerRight: () => <HeaderRight onPress={() => console.log('right')} />,
+      headerRight: () => <HeaderRight disabled={disabled} onPress={onSubmit} />,
     });
   }, [navigation]);
 
   return (
     <SafeInputView>
       <View style={styles.container}>
-        <Button title="back" onPress={() => navigation.goBack()} />
         <View
           style={[
             styles.photo,
@@ -37,7 +70,8 @@ const UpdateProfileScreen = () => {
 
         <View>
           <TextInput
-            value={user.displayName}
+            value={displayName}
+            onChangeText={(text) => setDisplayName(text.trim())}
             style={styles.input}
             placeholder="Nickname"
             textAlign="center"
