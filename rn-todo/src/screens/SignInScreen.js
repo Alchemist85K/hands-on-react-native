@@ -1,4 +1,11 @@
-import { Alert, Image, StyleSheet, View, Keyboard } from 'react-native';
+import {
+  Alert,
+  Image,
+  StyleSheet,
+  View,
+  Keyboard,
+  SafeAreaView,
+} from 'react-native';
 import Input, {
   IconNames,
   KeyboardTypes,
@@ -39,7 +46,7 @@ const SignInScreen = ({ navigation }) => {
 
   return (
     <SafeInputView>
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <Image source={require('../../assets/main.png')} style={styles.image} />
 
         <Input
@@ -71,7 +78,7 @@ const SignInScreen = ({ navigation }) => {
             isLoading={isLoading}
           />
         </View>
-      </View>
+      </SafeAreaView>
     </SafeInputView>
   );
 };
