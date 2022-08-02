@@ -26,7 +26,8 @@
     "react-native-screens": "~3.11.1",
     "expo-file-system": "~14.0.0",
     "expo-crypto": "~10.2.0",
-    "expo-media-library": "~14.1.0"
+    "expo-media-library": "~14.1.0",
+    "expo-blur": "~11.1.0"
   },
   "devDependencies": {
     "@types/react": "~17.0.21",

@@ -14,11 +14,13 @@ import {
   Image,
   Pressable,
   useWindowDimensions,
+  Platform,
 } from 'react-native';
 import HeaderRight from '../components/HeaderRight';
 import * as MediaLibrary from 'expo-media-library';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { PRIMARY } from '../colors';
+import { BlurView } from 'expo-blur';
 
 const initialListInfo = { endCursor: '', hasNextPage: true };
 
@@ -112,13 +114,16 @@ const ImagePickerScreen = () => {
             >
               <Image source={{ uri: item.uri }} style={styles.photo} />
               {isSelected && (
-                <View style={[StyleSheet.absoluteFill, styles.checkIcon]}>
+                <BlurView
+                  style={[StyleSheet.absoluteFill, styles.checkIcon]}
+                  intensity={Platform.select({ ios: 10, android: 50 })}
+                >
                   <MaterialCommunityIcons
                     name="check-circle"
                     size={40}
                     color={PRIMARY.DEFAULT}
                   />
-                </View>
+                </BlurView>
               )}
             </Pressable>
           );
