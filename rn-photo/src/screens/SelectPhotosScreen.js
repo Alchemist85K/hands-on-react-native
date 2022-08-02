@@ -7,6 +7,7 @@ import {
   Pressable,
   Alert,
   Platform,
+  Image,
 } from 'react-native';
 import { MainRoutes } from '../navigations/routes';
 import { GRAY, WHITE } from '../colors';
@@ -14,6 +15,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useEffect, useState, useLayoutEffect, useCallback } from 'react';
 import HeaderRight from '../components/HeaderRight';
 import { getLocalUri } from '../components/ImagePicker';
+import Swiper from 'react-native-swiper';
 
 const SelectPhotosScreen = () => {
   const navigation = useNavigation();
@@ -67,18 +69,31 @@ const SelectPhotosScreen = () => {
       </Text>
 
       <View style={{ width, height: width }}>
-        <Pressable
-          style={styles.photoButton}
-          onPress={() =>
-            navigation.navigate(MainRoutes.IMAGE_PICKER, { maxCount: 4 })
-          }
-        >
-          <MaterialCommunityIcons
-            name="image-plus"
-            size={80}
-            color={GRAY.DEFAULT}
-          />
-        </Pressable>
+        {photos.length ? (
+          <Swiper>
+            {photos.map(({ uri }, idx) => (
+              <Image
+                key={idx}
+                source={{ uri }}
+                style={styles.photo}
+                resizeMode="contain"
+              />
+            ))}
+          </Swiper>
+        ) : (
+          <Pressable
+            style={styles.photoButton}
+            onPress={() =>
+              navigation.navigate(MainRoutes.IMAGE_PICKER, { maxCount: 4 })
+            }
+          >
+            <MaterialCommunityIcons
+              name="image-plus"
+              size={80}
+              color={GRAY.DEFAULT}
+            />
+          </Pressable>
+        )}
       </View>
     </View>
   );
@@ -100,6 +115,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: GRAY.LIGHT,
+  },
+  photo: {
+    width: '100%',
+    height: '100%',
   },
 });
 
