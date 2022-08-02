@@ -9,9 +9,9 @@ const CountTypes = {
 const reducer = (state, action) => {
   switch (action.type) {
     case CountTypes.INCREMENT:
-      return { count: state.count + 1 };
+      return { count: state.count + action.value };
     case CountTypes.DECREMENT:
-      return { count: state.count - 1 };
+      return { count: state.count - action.value };
     default:
       return state;
   }
@@ -28,11 +28,11 @@ const ReducerTest = () => {
 
       <Button
         title="+"
-        onPress={() => dispatch({ type: CountTypes.INCREMENT })}
+        onPress={() => dispatch({ type: CountTypes.INCREMENT, value: 2 })}
       />
       <Button
         title="-"
-        onPress={() => dispatch({ type: CountTypes.DECREMENT })}
+        onPress={() => dispatch({ type: CountTypes.DECREMENT, value: 3 })}
       />
     </View>
   );
