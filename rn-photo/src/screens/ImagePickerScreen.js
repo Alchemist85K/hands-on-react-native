@@ -24,6 +24,22 @@ const ImagePickerScreen = () => {
     })();
   }, [navigation, requestPermission]);
 
+  const getPhotos = async () => {
+    const options = {
+      first: 30,
+      sortBy: [MediaLibrary.SortBy.creationTime],
+    };
+    const res = await MediaLibrary.getAssetsAsync(options);
+    console.log(res.assets);
+    console.log(res.endCursor, res.hasNextPage, res.totalCount);
+  };
+
+  useEffect(() => {
+    if (status?.granted) {
+      getPhotos();
+    }
+  }, [status?.granted]);
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => <HeaderRight onPress={() => {}} />,
