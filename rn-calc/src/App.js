@@ -3,31 +3,32 @@ import { StyleSheet, Text, View } from 'react-native';
 import Button, { ButtonTypes } from './components/Button';
 
 const App = () => {
+  let result = 0;
+
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
-      <Text style={styles.text}>Calc App</Text>
-      <Button
-        title="1"
-        onPress={() => console.log(1)}
-        buttonStyle={{ width: 100, height: 100 }}
-      />
-      <Button
-        title="0"
-        onPress={() => console.log(0)}
-        buttonStyle={{ width: 200, height: 100 }}
-        buttonType={ButtonTypes.NUMBER}
-      />
+      <Text style={styles.text}>{result}</Text>
+
       <Button
         title="+"
-        onPress={() => console.log('+')}
-        buttonStyle={{ width: 100, height: 200 }}
+        onPress={() => {
+          result = result + 1;
+          console.log('+ : ', result);
+        }}
+        buttonStyle={styles.button}
         buttonType={ButtonTypes.OPERATOR}
       />
+
+      <View style={{ paddingVertical: 10 }}></View>
+
       <Button
         title="-"
-        onPress={() => console.log('-')}
-        buttonStyle={{ width: 100, height: 100 }}
+        onPress={() => {
+          result = result - 1;
+          console.log('- : ', result);
+        }}
+        buttonStyle={styles.button}
         buttonType={ButtonTypes.OPERATOR}
       />
     </View>
@@ -42,12 +43,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   text: {
-    fontSize: 30,
+    fontSize: 60,
     fontWeight: '700',
-    color: 'green',
   },
-  error: {
-    color: 'red',
+  button: {
+    width: 100,
+    height: 100,
   },
 });
 
