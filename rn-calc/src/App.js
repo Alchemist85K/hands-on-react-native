@@ -16,18 +16,14 @@ const App = () => {
       <View style={styles.buttonContainer}>
         <Text>Button</Text>
       </View>
-
-      <View style={{ flex: 2, backgroundColor: '#e3e3e3' }}>
-        <Text>component</Text>
-      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    height: 400,
-    flexDirection: 'row',
+    flex: 1,
+    flexDirection: 'column',
     backgroundColor: '#fff',
     alignItems: 'stretch',
     justifyContent: 'center',
@@ -36,13 +32,17 @@ const styles = StyleSheet.create({
     fontSize: 60,
     fontWeight: '700',
     color: '#ffffff',
+    paddingBottom: 30,
+    paddingRight: 30,
   },
   resultContainer: {
-    height: 100,
+    flex: 1,
     backgroundColor: '#000000',
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
   },
   buttonContainer: {
-    height: 100,
+    flex: 1,
     backgroundColor: '#A5B4FC',
   },
 });
