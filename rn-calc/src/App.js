@@ -26,10 +26,10 @@ const App = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    height: 400,
     flexDirection: 'row',
     backgroundColor: '#fff',
-    alignItems: 'center',
+    alignItems: 'stretch',
     justifyContent: 'center',
   },
   text: {
