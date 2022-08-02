@@ -12,7 +12,7 @@ import FastImage from '../components/FastImage';
 import { useUserState } from '../contexts/UserContext';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import SafeInputView from '../components/SafeInputView';
-import { useLayoutEffect, useEffect, useState } from 'react';
+import { useLayoutEffect, useEffect, useState, useCallback } from 'react';
 import HeaderRight from '../components/HeaderRight';
 import { updateUserInfo } from '../api/auth';
 
@@ -29,7 +29,7 @@ const UpdateProfileScreen = () => {
     setDisabled(!displayName || isLoading);
   }, [displayName, isLoading]);
 
-  const onSubmit = async () => {
+  const onSubmit = useCallback(async () => {
     Keyboard.dismiss();
     if (!disabled) {
       setIsLoading(true);
@@ -45,13 +45,13 @@ const UpdateProfileScreen = () => {
         setIsLoading(false);
       }
     }
-  };
+  }, [disabled, displayName, navigation, setUser]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => <HeaderRight disabled={disabled} onPress={onSubmit} />,
     });
-  }, [navigation]);
+  }, [navigation, disabled, onSubmit]);
 
   return (
     <SafeInputView>
