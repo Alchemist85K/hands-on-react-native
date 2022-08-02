@@ -5,6 +5,7 @@ import MapScreen from '../screens/MapScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import { ContentRoutes } from './routes';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { GRAY, PRIMARY } from '../colors';
 
 const Tab = createBottomTabNavigator();
 
@@ -16,9 +17,10 @@ const getTabBarIcon = ({ focused, color, size, name }) => {
 const ContentTab = () => {
   return (
     <Tab.Navigator
-      initialRouteName={ContentRoutes.HOME}
       screenOptions={{
         headerShown: false,
+        tabBarActiveTintColor: PRIMARY.DARK,
+        tabBarInactiveTintColor: GRAY.DARK,
       }}
     >
       <Tab.Screen
