@@ -6,16 +6,15 @@ import Input, {
   ReturnKeyTypes,
 } from '../components/Input';
 import SafeInputView from '../components/SafeInputView';
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Button from '../components/Button';
 import { signIn } from '../api/auth';
-import PropTypes from 'prop-types';
-import UserContext from '../contexts/UserContext';
+import { useUserContext } from '../contexts/UserContext';
 
 const SignInScreen = () => {
   const insets = useSafeAreaInsets();
 
-  const { setUser } = useContext(UserContext);
+  const { setUser } = useUserContext();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -85,10 +84,6 @@ const SignInScreen = () => {
       </View>
     </SafeInputView>
   );
-};
-
-SignInScreen.propTypes = {
-  navigation: PropTypes.object,
 };
 
 const styles = StyleSheet.create({
