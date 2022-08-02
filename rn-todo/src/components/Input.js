@@ -9,6 +9,8 @@ const Input = ({ title, placeholder }) => {
         style={styles.input}
         placeholder={placeholder ?? title}
         placeholderTextColor={'#a3a3a3'}
+        autoCapitalize="none"
+        autoCorrect={false}
       />
     </View>
   );
