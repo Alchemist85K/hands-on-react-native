@@ -2,6 +2,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import SignInScreen from '../screens/SignInScreen';
 import ListScreen from '../screens/ListScreen';
 import { PRIMARY, WHITE } from '../colors';
+import { Pressable, Text } from 'react-native';
 
 const Stack = createNativeStackNavigator();
 
@@ -22,6 +23,13 @@ const AuthStack = () => {
           headerTintColor: PRIMARY.DEFAULT,
           headerTitleStyle: {
             fontWeight: '700',
+          },
+          headerTitle: ({ children, tintColor }) => {
+            return (
+              <Pressable onPress={() => console.log('test')}>
+                <Text style={{ color: tintColor }}>{children}</Text>
+              </Pressable>
+            );
           },
         }}
       />
