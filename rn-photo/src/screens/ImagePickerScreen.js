@@ -17,6 +17,8 @@ import {
 } from 'react-native';
 import HeaderRight from '../components/HeaderRight';
 import * as MediaLibrary from 'expo-media-library';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { PRIMARY } from '../colors';
 
 const initialListInfo = { endCursor: '', hasNextPage: true };
 
@@ -28,6 +30,7 @@ const ImagePickerScreen = () => {
   const [photos, setPhotos] = useState([]);
   const listInfo = useRef(initialListInfo);
   const [refreshing, setRefreshing] = useState(false);
+  const [selectedPhotos, setSelectedPhotos] = useState([]);
 
   useEffect(() => {
     (async () => {
@@ -82,16 +85,44 @@ const ImagePickerScreen = () => {
     });
   }, [navigation]);
 
+  const isSelectedPhoto = (photo) => {
+    return selectedPhotos.findIndex((item) => item.id === photo.id) > -1;
+  };
+
+  const togglePhoto = (photo) => {
+    const isSelected = isSelectedPhoto(photo);
+    setSelectedPhotos((prev) =>
+      isSelected
+        ? prev.filter((item) => item.id !== photo.id)
+        : [...prev, photo]
+    );
+  };
+
   return (
     <View style={styles.container}>
       <FlatList
         style={styles.list}
         data={photos}
-        renderItem={({ item }) => (
-          <Pressable style={{ width, height: width }}>
-            <Image source={{ uri: item.uri }} style={styles.photo} />
-          </Pressable>
-        )}
+        renderItem={({ item }) => {
+          const isSelected = isSelectedPhoto(item);
+          return (
+            <Pressable
+              style={{ width, height: width }}
+              onPress={() => togglePhoto(item)}
+            >
+              <Image source={{ uri: item.uri }} style={styles.photo} />
+              {isSelected && (
+                <View style={[StyleSheet.absoluteFill, styles.checkIcon]}>
+                  <MaterialCommunityIcons
+                    name="check-circle"
+                    size={40}
+                    color={PRIMARY.DEFAULT}
+                  />
+                </View>
+              )}
+            </Pressable>
+          );
+        }}
         numColumns={3}
         onEndReached={getPhotos}
         onEndReachedThreshold={0.4}
@@ -114,6 +145,10 @@ const styles = StyleSheet.create({
   photo: {
     width: '100%',
     height: '100%',
+  },
+  checkIcon: {
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 
