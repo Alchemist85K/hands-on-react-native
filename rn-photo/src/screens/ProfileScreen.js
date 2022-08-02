@@ -7,8 +7,12 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { GRAY, WHITE } from '../colors';
 import DangerAlert, { AlertTypes } from '../components/DangerAlert';
 import { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { MainRoutes } from '../navigations/routes';
 
 const ProfileScreen = () => {
+  const navigation = useNavigation();
+
   const [user, setUser] = useUserState();
   const { top } = useSafeAreaInsets();
 
@@ -46,7 +50,7 @@ const ProfileScreen = () => {
           <FastImage source={{ uri: user.photoURL }} style={styles.photo} />
           <Pressable
             style={styles.editButton}
-            onPress={() => console.log('UPDATE')}
+            onPress={() => navigation.navigate(MainRoutes.UPDATE_PROFILE)}
           >
             <MaterialCommunityIcons name="pencil" size={20} color={WHITE} />
           </Pressable>
