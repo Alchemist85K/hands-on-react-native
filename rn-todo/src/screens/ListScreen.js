@@ -44,10 +44,15 @@ const ListScreen = () => {
     save(newTodos);
   };
 
+  const onDelete = (id) => {
+    const newTodos = todos.filter((item) => item.id !== id);
+    save(newTodos);
+  };
+
   return (
     <View style={{ flex: 1, paddingBottom: bottom }}>
       {todos.length ? (
-        <List data={todos} setIsBottom={setIsBottom} />
+        <List data={todos} setIsBottom={setIsBottom} onDelete={onDelete} />
       ) : (
         <EmptyList />
       )}
