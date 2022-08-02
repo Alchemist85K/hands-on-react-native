@@ -24,7 +24,9 @@ const SelectPhotosScreen = () => {
       <View style={{ width, height: width }}>
         <Pressable
           style={styles.photoButton}
-          onPress={() => navigation.navigate(MainRoutes.IMAGE_PICKER)}
+          onPress={() =>
+            navigation.navigate(MainRoutes.IMAGE_PICKER, { maxCount: 4 })
+          }
         >
           <MaterialCommunityIcons
             name="image-plus"
