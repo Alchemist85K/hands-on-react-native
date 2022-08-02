@@ -19,14 +19,24 @@ import { MainRoutes } from '../navigations/routes';
 
 const UpdateProfileScreen = () => {
   const navigation = useNavigation();
-  const route = useRoute();
-  console.log(route.params);
+  const { params } = useRoute();
 
   const [user, setUser] = useUserState();
 
+  const [photo, setPhoto] = useState({ uri: user.photoURL });
   const [displayName, setDisplayName] = useState(user.displayName);
   const [disabled, setDisabled] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (params) {
+      const { selectedPhotos } = params;
+      if (selectedPhotos?.length) {
+        console.log('selectedPhotos: ', selectedPhotos[0]);
+        setPhoto(selectedPhotos[0]);
+      }
+    }
+  }, [params]);
 
   useEffect(() => {
     setDisabled(!displayName || isLoading);
@@ -65,7 +75,7 @@ const UpdateProfileScreen = () => {
             user.photoURL || { backgroundColor: GRAY.DEFAULT },
           ]}
         >
-          <FastImage source={{ uri: user.photoURL }} style={styles.photo} />
+          <FastImage source={{ uri: photo.uri }} style={styles.photo} />
           <Pressable
             style={styles.imageButton}
             onPress={() => navigation.navigate(MainRoutes.IMAGE_PICKER)}
