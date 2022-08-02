@@ -16,13 +16,17 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSPhotoLibraryUsageDescription": "The app accesses the photo library to upload a profile photo and use it on the post."
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#F97316"
-      }
+      },
+      "permissions": ["READ_EXTERNAL_STORAGE"]
     },
     "web": {
       "favicon": "./assets/favicon.png"
