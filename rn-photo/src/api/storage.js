@@ -1,4 +1,4 @@
-import { ref, getStorage, uploadBytes } from 'firebase/storage';
+import { ref, getStorage, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 export const uploadPhoto = async ({ uri, uid }) => {
   if (uri.startsWith('https')) {
@@ -27,5 +27,5 @@ export const uploadPhoto = async ({ uri, uid }) => {
 
   blob.close();
 
-  return uri;
+  return await getDownloadURL(storageRef);
 };

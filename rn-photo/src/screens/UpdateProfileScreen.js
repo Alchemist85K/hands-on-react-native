@@ -18,6 +18,7 @@ import HeaderRight from '../components/HeaderRight';
 import { updateUserInfo } from '../api/auth';
 import { MainRoutes } from '../navigations/routes';
 import { getLocalUri } from '../components/ImagePicker';
+import { uploadPhoto } from '../api/storage';
 
 const UpdateProfileScreen = () => {
   const navigation = useNavigation();
@@ -53,21 +54,32 @@ const UpdateProfileScreen = () => {
           ios: await getLocalUri(photo.id),
           android: photo.uri,
         });
-        console.log(localUri);
-        setIsLoading(false);
+        const photoURL = await uploadPhoto({
+          uri: localUri,
+          uid: user.uid,
+        });
+        console.log(photoURL);
 
-        // const userInfo = { displayName };
+        const userInfo = { displayName, photoURL };
 
-        // await updateUserInfo(userInfo);
-        // setUser((prev) => ({ ...prev, ...userInfo }));
+        await updateUserInfo(userInfo);
+        setUser((prev) => ({ ...prev, ...userInfo }));
 
-        // navigation.goBack();
+        navigation.goBack();
       } catch (e) {
         Alert.alert('사용자 수정 실패', e.message);
         setIsLoading(false);
       }
     }
-  }, [disabled, displayName, navigation, setUser, photo.id, photo.uri]);
+  }, [
+    disabled,
+    displayName,
+    navigation,
+    setUser,
+    photo.id,
+    photo.uri,
+    user.uid,
+  ]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
