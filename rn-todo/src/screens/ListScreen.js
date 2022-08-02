@@ -1,4 +1,14 @@
+import { memo } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
+
+const ListItem = memo(({ item }) => {
+  console.log(item.id);
+  return (
+    <View style={{ paddingVertical: 10, paddingHorizontal: 20 }}>
+      <Text style={{ fontSize: 20 }}>{item.task}</Text>
+    </View>
+  );
+});
 
 const ListScreen = () => {
   const todos = [];
@@ -11,14 +21,7 @@ const ListScreen = () => {
       <FlatList
         data={todos}
         keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => {
-          console.log(item.id);
-          return (
-            <View style={{ paddingVertical: 10, paddingHorizontal: 20 }}>
-              <Text style={{ fontSize: 20 }}>{item.task}</Text>
-            </View>
-          );
-        }}
+        renderItem={({ item }) => <ListItem item={item} />}
         windowSize={5}
       />
     </View>
