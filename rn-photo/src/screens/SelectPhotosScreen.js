@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import {
   StyleSheet,
   Text,
@@ -9,11 +9,21 @@ import {
 import { MainRoutes } from '../navigations/routes';
 import { GRAY, WHITE } from '../colors';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useEffect, useState } from 'react';
 
 const SelectPhotosScreen = () => {
   const navigation = useNavigation();
+  const { params } = useRoute();
 
   const width = useWindowDimensions().width;
+
+  const [photos, setPhotos] = useState([]);
+
+  useEffect(() => {
+    if (params) {
+      setPhotos(params.selectedPhotos ?? []);
+    }
+  }, [params]);
 
   return (
     <View style={styles.container}>
