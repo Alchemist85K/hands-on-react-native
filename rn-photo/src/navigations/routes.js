@@ -4,7 +4,7 @@ export const AuthRoutes = {
 };
 
 export const MainRoutes = {
-  PROFILE: 'Profile',
+  CONTENT_TAB: 'ContentTab',
 };
 
 export const ContentRoutes = {
