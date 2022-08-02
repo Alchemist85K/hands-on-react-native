@@ -15,7 +15,12 @@ const App = () => {
       </View>
 
       <View style={styles.buttonContainer}>
-        <Text>Button</Text>
+        <View style={styles.leftPad}>
+          <View style={styles.number}>{/* 숫자 버튼 */}</View>
+          <View style={styles.bottom}>{/* 0, = 버튼 */}</View>
+        </View>
+
+        <View>{/* 연산 버튼 */}</View>
       </View>
     </View>
   );
@@ -46,6 +51,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#A5B4FC',
   },
+  leftPad: {},
+  number: {},
+  bottom: {},
 });
 
 export default App;
