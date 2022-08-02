@@ -30,12 +30,21 @@ export const signIn = async ({ email, password }) => {
   return user;
 };
 
+const PHOTO_URL =
+  'https://firebasestorage.googleapis.com/v0/b/rn-photo.appspot.com/o/profile.png?alt=media';
+
 export const signUp = async ({ email, password }) => {
   const { user } = await createUserWithEmailAndPassword(
     getAuth(),
     email,
     password
   );
+
+  await updateUserInfo({
+    displayName: email.split('@')[0].slice(0, 10),
+    photoURL: PHOTO_URL,
+  });
+
   return user;
 };
 
