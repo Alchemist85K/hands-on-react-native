@@ -1,12 +1,27 @@
 import { useNavigation } from '@react-navigation/native';
-import { useEffect, useLayoutEffect } from 'react';
-import { Alert, StyleSheet, Text, View } from 'react-native';
+import { useEffect, useLayoutEffect, useState } from 'react';
+import {
+  Alert,
+  StyleSheet,
+  View,
+  FlatList,
+  Image,
+  Pressable,
+  useWindowDimensions,
+} from 'react-native';
 import HeaderRight from '../components/HeaderRight';
 import * as MediaLibrary from 'expo-media-library';
 
 const ImagePickerScreen = () => {
   const navigation = useNavigation();
   const [status, requestPermission] = MediaLibrary.usePermissions();
+
+  const width = useWindowDimensions().width / 3;
+  const [photos, setPhotos] = useState([]);
+  const [listInfo, setListInfo] = useState({
+    endCursor: '',
+    hasNextPage: true,
+  });
 
   useEffect(() => {
     (async () => {
@@ -29,9 +44,12 @@ const ImagePickerScreen = () => {
       first: 30,
       sortBy: [MediaLibrary.SortBy.creationTime],
     };
-    const res = await MediaLibrary.getAssetsAsync(options);
-    console.log(res.assets);
-    console.log(res.endCursor, res.hasNextPage, res.totalCount);
+    if (listInfo.hasNextPage) {
+      const { assets, endCursor, hasNextPage } =
+        await MediaLibrary.getAssetsAsync(options);
+      setPhotos((prev) => [...prev, ...assets]);
+      setListInfo({ endCursor, hasNextPage });
+    }
   };
 
   useEffect(() => {
@@ -48,7 +66,16 @@ const ImagePickerScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text>Image Picker</Text>
+      <FlatList
+        style={styles.list}
+        data={photos}
+        renderItem={({ item }) => (
+          <Pressable style={{ width, height: width }}>
+            <Image source={{ uri: item.uri }} style={styles.photo} />
+          </Pressable>
+        )}
+        numColumns={3}
+      />
     </View>
   );
 };
@@ -58,6 +85,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  list: {
+    width: '100%',
+  },
+  photo: {
+    width: '100%',
+    height: '100%',
   },
 });
 
