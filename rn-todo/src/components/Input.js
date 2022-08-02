@@ -1,6 +1,6 @@
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 import PropTypes from 'prop-types';
-import { GRAY, PRIMARY } from '../colors';
+import { BLACK, GRAY, PRIMARY } from '../colors';
 import { useState } from 'react';
 
 export const KeyboardTypes = {
@@ -13,17 +13,28 @@ export const ReturnKeyTypes = {
   NEXT: 'next',
 };
 
-const Input = ({ title, placeholder, ...props }) => {
+const Input = ({ title, placeholder, value, ...props }) => {
   const [isFocused, setIsFocused] = useState(false);
 
   return (
     <View style={styles.container}>
-      <Text style={[styles.title, isFocused && styles.focusedTitle]}>
+      <Text
+        style={[
+          styles.title,
+          value && styles.hasValueTitle,
+          isFocused && styles.focusedTitle,
+        ]}
+      >
         {title}
       </Text>
       <TextInput
         {...props}
-        style={[styles.input, isFocused && styles.focusedInput]}
+        value={value}
+        style={[
+          styles.input,
+          value && styles.hasValueInput,
+          isFocused && styles.focusedInput,
+        ]}
         placeholder={placeholder ?? title}
         placeholderTextColor={GRAY.DEFAULT}
         autoCapitalize="none"
@@ -40,6 +51,7 @@ const Input = ({ title, placeholder, ...props }) => {
 Input.propTypes = {
   title: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
+  value: PropTypes.string,
 };
 
 const styles = StyleSheet.create({
@@ -52,6 +64,9 @@ const styles = StyleSheet.create({
     marginBottom: 4,
     color: GRAY.DEFAULT,
   },
+  hasValueTitle: {
+    color: BLACK,
+  },
   focusedTitle: {
     fontWeight: '600',
     color: PRIMARY.DEFAULT,
@@ -62,6 +77,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     height: 42,
     borderColor: GRAY.DEFAULT,
+  },
+  hasValueInput: {
+    borderColor: BLACK,
+    color: BLACK,
   },
   focusedInput: {
     borderWidth: 2,
