@@ -19,7 +19,16 @@ const App = () => {
 
       <View style={styles.buttonContainer}>
         <View style={styles.leftPad}>
-          <View style={styles.number}>{/* 숫자 버튼 */}</View>
+          <View style={styles.number}>
+            {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (
+              <Button
+                key={num}
+                title={num.toString()}
+                onPress={() => {}}
+                buttonStyle={{ width, height: width, marginBottom: 1 }}
+              />
+            ))}
+          </View>
           <View style={styles.bottom}>
             <Button
               title="0"
@@ -57,7 +66,7 @@ const App = () => {
             title="+"
             onPress={() => {}}
             buttonType={ButtonTypes.OPERATOR}
-            buttonStyle={{ width, height: width * 2, marginTop: 1 }}
+            buttonStyle={{ width, height: width * 2 + 1, marginTop: 1 }}
           />
         </View>
       </View>
@@ -87,14 +96,18 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
   buttonContainer: {
-    backgroundColor: '#A5B4FC',
+    backgroundColor: '#000000',
     flexDirection: 'row',
     justifyContent: 'space-evenly',
   },
   leftPad: {
     width: '75%',
   },
-  number: {},
+  number: {
+    flexWrap: 'wrap-reverse',
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+  },
   bottom: {
     flexDirection: 'row',
     justifyContent: 'space-evenly',
