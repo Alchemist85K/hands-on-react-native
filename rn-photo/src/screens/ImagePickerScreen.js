@@ -1,5 +1,11 @@
 import { useNavigation } from '@react-navigation/native';
-import { useCallback, useEffect, useLayoutEffect, useState } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useState,
+  useRef,
+} from 'react';
 import {
   Alert,
   StyleSheet,
@@ -18,10 +24,7 @@ const ImagePickerScreen = () => {
 
   const width = useWindowDimensions().width / 3;
   const [photos, setPhotos] = useState([]);
-  const [listInfo, setListInfo] = useState({
-    endCursor: '',
-    hasNextPage: true,
-  });
+  const listInfo = useRef({ endCursor: '', hasNextPage: true });
 
   useEffect(() => {
     (async () => {
@@ -44,13 +47,20 @@ const ImagePickerScreen = () => {
       first: 30,
       sortBy: [MediaLibrary.SortBy.creationTime],
     };
-    if (listInfo.hasNextPage) {
+
+    if (listInfo.current.endCursor) {
+      options['after'] = listInfo.current.endCursor;
+    }
+
+    if (listInfo.current.hasNextPage) {
       const { assets, endCursor, hasNextPage } =
         await MediaLibrary.getAssetsAsync(options);
       setPhotos((prev) => [...prev, ...assets]);
-      setListInfo({ endCursor, hasNextPage });
+      listInfo.current = { endCursor, hasNextPage };
     }
-  }, [listInfo.hasNextPage]);
+  }, []);
+
+  console.log(photos.length);
 
   useEffect(() => {
     if (status?.granted) {
@@ -75,6 +85,8 @@ const ImagePickerScreen = () => {
           </Pressable>
         )}
         numColumns={3}
+        onEndReached={getPhotos}
+        onEndReachedThreshold={0.4}
       />
     </View>
   );
