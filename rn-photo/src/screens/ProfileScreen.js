@@ -3,7 +3,8 @@ import { useUserState } from '../contexts/UserContext';
 import { signOut } from '../api/auth';
 
 const ProfileScreen = () => {
-  const [, setUser] = useUserState();
+  const [user, setUser] = useUserState();
+  console.log(user.uid, user.email, user.displayName, user.photoURL);
 
   return (
     <View style={styles.container}>
