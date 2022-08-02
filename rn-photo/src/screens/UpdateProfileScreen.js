@@ -15,6 +15,7 @@ import SafeInputView from '../components/SafeInputView';
 import { useLayoutEffect, useEffect, useState, useCallback } from 'react';
 import HeaderRight from '../components/HeaderRight';
 import { updateUserInfo } from '../api/auth';
+import { MainRoutes } from '../navigations/routes';
 
 const UpdateProfileScreen = () => {
   const navigation = useNavigation();
@@ -63,7 +64,10 @@ const UpdateProfileScreen = () => {
           ]}
         >
           <FastImage source={{ uri: user.photoURL }} style={styles.photo} />
-          <Pressable style={styles.imageButton} onPress={() => {}}>
+          <Pressable
+            style={styles.imageButton}
+            onPress={() => navigation.navigate(MainRoutes.IMAGE_PICKER)}
+          >
             <MaterialCommunityIcons name="image" size={20} color={WHITE} />
           </Pressable>
         </View>
