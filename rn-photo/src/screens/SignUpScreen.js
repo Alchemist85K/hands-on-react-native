@@ -49,7 +49,7 @@ const SignUpScreen = () => {
         </View>
 
         <ScrollView
-          style={[styles.form, { paddingBottom: 120 }]}
+          style={[styles.form, { paddingBottom: bottom ? bottom + 10 : 40 }]}
           contentContainerStyle={{ alignItems: 'center' }}
         >
           <Input
@@ -102,6 +102,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   form: {
+    flexGrow: 0,
     backgroundColor: WHITE,
     paddingHorizontal: 20,
     paddingTop: 40,
