@@ -11,7 +11,7 @@ import Button from '../components/Button';
 import { signIn } from '../api/auth';
 import PropTypes from 'prop-types';
 
-const SignInScreen = ({ navigation }) => {
+const SignInScreen = ({ setUser }) => {
   const insets = useSafeAreaInsets();
 
   const [email, setEmail] = useState('');
@@ -31,7 +31,7 @@ const SignInScreen = ({ navigation }) => {
         Keyboard.dismiss();
         const data = await signIn(email, password);
         setIsLoading(false);
-        navigation.navigate('List');
+        setUser(data);
       } catch (error) {
         Alert.alert('로그인 실패', error, [
           { text: '확인', onPress: () => setIsLoading(false) },

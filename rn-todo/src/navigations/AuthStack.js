@@ -1,44 +1,21 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import SignInScreen from '../screens/SignInScreen';
-import ListScreen from '../screens/ListScreen';
-import { PRIMARY, WHITE } from '../colors';
-import HeaderLeftButton from '../components/HeaderLeftButton';
-import HeaderRightButton from '../components/HeaderRightButton';
-import SettingsScreen from '../screens/SettingsScreen';
+import { WHITE } from '../colors';
 
 const Stack = createNativeStackNavigator();
 
-const AuthStack = () => {
+const AuthStack = (props) => {
   return (
     <Stack.Navigator
       initialRouteName="SignIn"
       screenOptions={{
         contentStyle: { backgroundColor: WHITE },
-        headerTitleAlign: 'center',
-        headerTintColor: PRIMARY.DEFAULT,
-        headerTitleStyle: {
-          fontWeight: '700',
-        },
-        headerLeft: HeaderLeftButton,
+        headerShown: false,
       }}
     >
-      <Stack.Screen
-        name="List"
-        component={ListScreen}
-        options={{
-          title: 'TODO List',
-          headerRight: HeaderRightButton,
-        }}
-      />
-      <Stack.Screen
-        name="SignIn"
-        component={SignInScreen}
-        options={{
-          title: '로그인',
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen name="Settings" component={SettingsScreen} />
+      <Stack.Screen name="SignIn">
+        {(screenProps) => <SignInScreen {...screenProps} {...props} />}
+      </Stack.Screen>
     </Stack.Navigator>
   );
 };
