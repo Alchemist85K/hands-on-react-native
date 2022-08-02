@@ -11,10 +11,13 @@ const ListItem = memo(({ item }) => {
 });
 
 const ListScreen = () => {
-  const todos = [];
-  for (let i = 1; i < 501; i++) {
-    todos.push({ id: i, task: `task :: ${i}` });
-  }
+  const todos = [
+    { id: 1, task: 'React Native', isDone: false },
+    { id: 2, task: 'FlatList', isDone: false },
+    { id: 3, task: 'React Navigation', isDone: true },
+    { id: 4, task: 'TODO App', isDone: false },
+    { id: 5, task: 'React.memo', isDone: true },
+  ];
 
   return (
     <View style={styles.container}>
