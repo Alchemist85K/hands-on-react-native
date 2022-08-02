@@ -51,6 +51,7 @@ const SignUpScreen = () => {
         <ScrollView
           style={[styles.form, { paddingBottom: bottom ? bottom + 10 : 40 }]}
           contentContainerStyle={{ alignItems: 'center' }}
+          bounces={false}
         >
           <Input
             value={email}
