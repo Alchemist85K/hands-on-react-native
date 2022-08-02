@@ -5,21 +5,21 @@ import { signOut } from '../api/auth';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { GRAY, WHITE } from '../colors';
+import DangerAlert from '../components/DangerAlert';
+import { useState } from 'react';
 
 const ProfileScreen = () => {
   const [user, setUser] = useUserState();
   const { top } = useSafeAreaInsets();
 
+  const [visible, setVisible] = useState(false);
+
   return (
     <View style={[styles.container, { paddingTop: top }]}>
+      <DangerAlert visible={visible} onClose={() => setVisible(false)} />
+
       <View style={styles.settingButton}>
-        <Pressable
-          onPress={async () => {
-            await signOut();
-            setUser({});
-          }}
-          hitSlop={10}
-        >
+        <Pressable onPress={() => setVisible(true)} hitSlop={10}>
           <MaterialCommunityIcons
             name="logout-variant"
             size={24}
