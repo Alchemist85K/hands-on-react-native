@@ -6,6 +6,7 @@ import { useState, useRef, useEffect } from 'react';
 import Button from '../components/Button';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import SafeInputView from '../components/SafeInputView';
+import TextButton from '../components/TextButton';
 
 const SignInScreen = () => {
   const navigation = useNavigation();
@@ -58,6 +59,11 @@ const SignInScreen = () => {
           disabled={disabled}
           isLoading={isLoading}
           styles={{ container: { marginTop: 20 } }}
+        />
+
+        <TextButton
+          title={'회원가입'}
+          onPress={() => navigation.navigate(AuthRoutes.SIGN_UP)}
         />
       </View>
     </SafeInputView>

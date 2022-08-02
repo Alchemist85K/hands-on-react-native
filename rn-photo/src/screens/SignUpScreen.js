@@ -1,9 +1,13 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { StyleSheet, View } from 'react-native';
+import TextButton from '../components/TextButton';
 
 const SignUpScreen = () => {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
-      <Text>Sign Up</Text>
+      <TextButton title={'로그인'} onPress={navigation.goBack} />
     </View>
   );
 };
