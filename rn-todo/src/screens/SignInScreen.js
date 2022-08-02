@@ -18,14 +18,6 @@ const SignInScreen = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    navigation.setOptions({
-      contentStyle: {
-        backgroundColor: email ? 'lightskyblue' : 'gainsboro',
-      },
-    });
-  }, [email, navigation]);
-
-  useEffect(() => {
     setDisabled(!email || !password);
   }, [email, password]);
 
