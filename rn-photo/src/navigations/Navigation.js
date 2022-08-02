@@ -6,9 +6,10 @@ import { Asset } from 'expo-asset';
 import { initFirebase } from '../api/firebase';
 import { useUserState } from '../contexts/UserContext';
 import MainStack from './MainStack';
+import { onAuthStateChanged } from '../api/auth';
 
 const Navigation = () => {
-  const [user] = useUserState();
+  const [user, setUser] = useUserState();
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
@@ -20,14 +21,21 @@ const Navigation = () => {
         ).downloadAsync();
 
         initFirebase();
+
+        const unsubscribe = onAuthStateChanged((user) => {
+          if (user) {
+            setUser(user);
+          }
+          setIsReady(true);
+          unsubscribe();
+        });
       } catch (e) {
         // eslint-disable-next-line no-console
         console.log(e);
-      } finally {
         setIsReady(true);
       }
     })();
-  }, []);
+  }, [setUser]);
 
   const onReady = async () => {
     if (isReady) {
