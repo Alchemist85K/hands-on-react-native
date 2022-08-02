@@ -12,10 +12,11 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 
+const RIGHT = 10;
 const BOTTOM = 30;
 const BUTTON_WIDTH = 60;
 
-const InputFAB = ({ onInsert }) => {
+const InputFAB = ({ onInsert, isBottom }) => {
   const [text, setText] = useState('');
   const [isOpened, setIsOpened] = useState(false);
   const inputRef = useRef();
@@ -24,6 +25,7 @@ const InputFAB = ({ onInsert }) => {
 
   const inputWidth = useRef(new Animated.Value(BUTTON_WIDTH)).current;
   const buttonRotation = useRef(new Animated.Value(0)).current;
+  const buttonRight = useRef(new Animated.Value(RIGHT)).current;
 
   const open = () => {
     setIsOpened(true);
@@ -92,17 +94,25 @@ const InputFAB = ({ onInsert }) => {
     }
   };
 
+  useEffect(() => {
+    Animated.timing(buttonRight, {
+      toValue: isBottom ? RIGHT - BUTTON_WIDTH : RIGHT,
+      useNativeDriver: false,
+    }).start();
+  }, [buttonRight, isBottom]);
+
   return (
     <>
       <Animated.View
         style={[
-          styles.position,
           styles.shape,
           styles.shadow,
           {
             justifyContent: 'center',
             bottom: keyboardHeight,
             width: inputWidth,
+            right: buttonRight,
+            position: 'absolute',
           },
         ]}
       >
@@ -123,11 +133,12 @@ const InputFAB = ({ onInsert }) => {
 
       <Animated.View
         style={[
-          styles.position,
           styles.shape,
           {
             bottom: keyboardHeight,
             transform: [{ rotate: spin }],
+            right: buttonRight,
+            position: 'absolute',
           },
         ]}
       >
@@ -148,14 +159,10 @@ const InputFAB = ({ onInsert }) => {
 
 InputFAB.propTypes = {
   onInsert: PropTypes.func.isRequired,
+  isBottom: PropTypes.bool.isRequired,
 };
 
 const styles = StyleSheet.create({
-  position: {
-    position: 'absolute',
-    bottom: BOTTOM,
-    right: 10,
-  },
   shape: {
     height: BUTTON_WIDTH,
     width: BUTTON_WIDTH,

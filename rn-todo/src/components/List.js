@@ -7,7 +7,7 @@ const Separator = () => {
   return <View style={styles.separator}></View>;
 };
 
-const List = ({ data }) => {
+const List = ({ data, setIsBottom }) => {
   return (
     <FlatList
       data={data}
@@ -20,10 +20,9 @@ const List = ({ data }) => {
       onScroll={({
         nativeEvent: { contentOffset, layoutMeasurement, contentSize },
       }) => {
-        console.log(
-          'from bottom: ',
-          contentSize.height - (contentOffset.y + layoutMeasurement.height)
-        );
+        const distance =
+          contentSize.height - (contentOffset.y + layoutMeasurement.height);
+        setIsBottom(!(distance > 20 || contentOffset.y === 0));
       }}
     />
   );
@@ -31,6 +30,7 @@ const List = ({ data }) => {
 
 List.propTypes = {
   data: PropTypes.array.isRequired,
+  setIsBottom: PropTypes.func.isRequired,
 };
 
 const styles = StyleSheet.create({
