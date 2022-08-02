@@ -1,9 +1,24 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
 
 const ListScreen = () => {
+  const todos = [];
+  for (let i = 1; i < 501; i++) {
+    todos.push({ value: i });
+  }
+
   return (
     <View style={styles.container}>
-      <Text style={{ fontSize: 30 }}>List Screen</Text>
+      <FlatList
+        data={todos}
+        renderItem={({ item }) => {
+          console.log(item.value);
+          return (
+            <View style={{ paddingVertical: 10, paddingHorizontal: 20 }}>
+              <Text style={{ fontSize: 20 }}>{item.value}</Text>
+            </View>
+          );
+        }}
+      />
     </View>
   );
 };
@@ -11,8 +26,6 @@ const ListScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
 });
 
