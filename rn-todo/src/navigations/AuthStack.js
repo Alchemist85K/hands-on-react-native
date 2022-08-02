@@ -35,6 +35,7 @@ const AuthStack = () => {
         component={SignInScreen}
         options={{
           title: '로그인',
+          headerShown: false,
         }}
       />
       <Stack.Screen name="Settings" component={SettingsScreen} />
