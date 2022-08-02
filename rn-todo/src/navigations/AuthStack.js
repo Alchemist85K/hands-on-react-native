@@ -13,8 +13,20 @@ const AuthStack = () => {
         contentStyle: { backgroundColor: WHITE },
       }}
     >
-      <Stack.Screen name="List" component={ListScreen} />
-      <Stack.Screen name="SignIn" component={SignInScreen} />
+      <Stack.Screen
+        name="List"
+        component={ListScreen}
+        options={{
+          title: 'TODO List',
+        }}
+      />
+      <Stack.Screen
+        name="SignIn"
+        component={SignInScreen}
+        options={{
+          title: '로그인',
+        }}
+      />
     </Stack.Navigator>
   );
 };
