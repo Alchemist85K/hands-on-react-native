@@ -14,12 +14,17 @@ const SignInScreen = () => {
     <View style={styles.container}>
       <Text>Sign In</Text>
       <Input
+        styles={{
+          container: { marginBottom: 20, paddingHorizontal: 20 },
+          input: { borderWidth: 1 },
+        }}
         value={email}
         onChangeText={(text) => setEmail(text.trim())}
         inputType={InputTypes.EMAIL}
         returnKeyType={ReturnKeyTypes.NEXT}
       />
       <Input
+        styles={inputStyles}
         value={password}
         onChangeText={(text) => setPassword(text.trim())}
         inputType={InputTypes.PASSWORD}
@@ -32,6 +37,16 @@ const SignInScreen = () => {
     </View>
   );
 };
+
+const inputStyles = StyleSheet.create({
+  container: {
+    marginBottom: 20,
+    paddingHorizontal: 20,
+  },
+  input: {
+    borderWidth: 1,
+  },
+});
 
 const styles = StyleSheet.create({
   container: {

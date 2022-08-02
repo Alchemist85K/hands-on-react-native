@@ -31,7 +31,7 @@ const InputTypeProps = {
   },
 };
 
-const Input = forwardRef(({ inputType, ...props }, ref) => {
+const Input = forwardRef(({ inputType, styles, ...props }, ref) => {
   const {
     title,
     placeholder,
@@ -44,11 +44,12 @@ const Input = forwardRef(({ inputType, ...props }, ref) => {
   const [isFocused, setIsFocused] = useState(false);
 
   return (
-    <View style={defaultStyles.container}>
+    <View style={[defaultStyles.container, styles?.container]}>
       <Text
         style={[
           defaultStyles.title,
           { color: value || isFocused ? PRIMARY.DEFAULT : GRAY.DARK },
+          styles?.title,
         ]}
       >
         {title}
@@ -68,12 +69,13 @@ const Input = forwardRef(({ inputType, ...props }, ref) => {
               borderColor: value || isFocused ? PRIMARY.DEFAULT : GRAY.DARK,
               color: value || isFocused ? PRIMARY.DEFAULT : GRAY.DARK,
             },
+            styles?.input,
           ]}
           textContentType="none"
           autoCapitalize="none"
           autoCorrect={false}
         />
-        <View style={defaultStyles.icon}>
+        <View style={[defaultStyles.icon, styles?.icon]}>
           <MaterialCommunityIcons
             name={isFocused ? active : inactive}
             size={24}
@@ -90,6 +92,7 @@ Input.displayName = 'Input';
 Input.propTypes = {
   inputType: PropTypes.oneOf(Object.values(InputTypes)).isRequired,
   value: PropTypes.string.isRequired,
+  styles: PropTypes.object,
 };
 
 const defaultStyles = StyleSheet.create({
