@@ -52,6 +52,7 @@ const SignUpScreen = () => {
           style={[styles.form, { paddingBottom: bottom ? bottom + 10 : 40 }]}
           contentContainerStyle={{ alignItems: 'center' }}
           bounces={false}
+          keyboardShouldPersistTaps="always"
         >
           <Input
             value={email}
