@@ -22,6 +22,7 @@ const InputFAB = () => {
   const [keyboardHeight, setKeyboardHeight] = useState(BOTTOM);
 
   const inputWidth = useRef(new Animated.Value(BUTTON_WIDTH)).current;
+  const buttonRotation = useRef(new Animated.Value(0)).current;
 
   const open = () => {
     setIsOpened(true);
@@ -32,6 +33,11 @@ const InputFAB = () => {
     }).start(() => {
       inputRef.current.focus();
     });
+    Animated.spring(buttonRotation, {
+      toValue: 1,
+      useNativeDriver: false,
+      bounciness: 20,
+    }).start();
   };
 
   const close = () => {
@@ -45,8 +51,18 @@ const InputFAB = () => {
       }).start(() => {
         inputRef.current.blur();
       });
+      Animated.spring(buttonRotation, {
+        toValue: 0,
+        useNativeDriver: false,
+        bounciness: 20,
+      }).start();
     }
   };
+
+  const spin = buttonRotation.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['0deg', '315deg'],
+  });
 
   const onPressButton = () => {
     isOpened ? close() : open();
@@ -96,18 +112,27 @@ const InputFAB = () => {
         />
       </Animated.View>
 
-      <Pressable
-        style={({ pressed }) => [
+      <Animated.View
+        style={[
           styles.position,
           styles.shape,
-          styles.button,
-          pressed && { backgroundColor: PRIMARY.DARK },
-          { bottom: keyboardHeight },
+          {
+            bottom: keyboardHeight,
+            transform: [{ rotate: spin }],
+          },
         ]}
-        onPress={onPressButton}
       >
-        <MaterialCommunityIcons name="plus" size={24} color={WHITE} />
-      </Pressable>
+        <Pressable
+          style={({ pressed }) => [
+            styles.shape,
+            styles.button,
+            pressed && { backgroundColor: PRIMARY.DARK },
+          ]}
+          onPress={onPressButton}
+        >
+          <MaterialCommunityIcons name="plus" size={24} color={WHITE} />
+        </Pressable>
+      </Animated.View>
     </>
   );
 };
