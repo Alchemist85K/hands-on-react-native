@@ -1,11 +1,5 @@
-import {
-  Alert,
-  Image,
-  StyleSheet,
-  View,
-  Keyboard,
-  SafeAreaView,
-} from 'react-native';
+import { Alert, Image, StyleSheet, View, Keyboard } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Input, {
   IconNames,
   KeyboardTypes,
