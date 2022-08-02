@@ -5,11 +5,15 @@ import {
   View,
   useWindowDimensions,
   Pressable,
+  Alert,
+  Platform,
 } from 'react-native';
 import { MainRoutes } from '../navigations/routes';
 import { GRAY, WHITE } from '../colors';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useLayoutEffect, useCallback } from 'react';
+import HeaderRight from '../components/HeaderRight';
+import { getLocalUri } from '../components/ImagePicker';
 
 const SelectPhotosScreen = () => {
   const navigation = useNavigation();
@@ -18,12 +22,43 @@ const SelectPhotosScreen = () => {
   const width = useWindowDimensions().width;
 
   const [photos, setPhotos] = useState([]);
+  const [disabled, setDisabled] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (params) {
       setPhotos(params.selectedPhotos ?? []);
     }
   }, [params]);
+
+  useEffect(() => {
+    setDisabled(isLoading || !photos.length);
+  }, [isLoading, photos.length]);
+
+  const onSubmit = useCallback(async () => {
+    if (!disabled) {
+      setIsLoading(true);
+      try {
+        const localUris = await Promise.all(
+          photos.map((photo) =>
+            Platform.select({
+              ios: getLocalUri(photo.id),
+              android: photo.uri,
+            })
+          )
+        );
+      } catch (e) {
+        Alert.alert('사진 정보 조회 실패', e.message);
+      }
+      setIsLoading(false);
+    }
+  }, [disabled, photos]);
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => <HeaderRight disabled={disabled} onPress={onSubmit} />,
+    });
+  }, [navigation, disabled, onSubmit]);
 
   return (
     <View style={styles.container}>
