@@ -4,6 +4,7 @@ import ListScreen from '../screens/ListScreen';
 import { PRIMARY, WHITE } from '../colors';
 import HeaderLeftButton from '../components/HeaderLeftButton';
 import HeaderRightButton from '../components/HeaderRightButton';
+import SettingsScreen from '../screens/SettingsScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -36,6 +37,7 @@ const AuthStack = () => {
           title: '로그인',
         }}
       />
+      <Stack.Screen name="Settings" component={SettingsScreen} />
     </Stack.Navigator>
   );
 };
