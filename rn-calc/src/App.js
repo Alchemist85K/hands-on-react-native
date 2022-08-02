@@ -1,10 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, useWindowDimensions, View } from 'react-native';
 import Button, { ButtonTypes } from './components/Button';
 import { useState } from 'react';
 
 const App = () => {
   const [result, setResult] = useState(0);
+
+  const windowWidth = useWindowDimensions().width;
+  const width = windowWidth / 4;
 
   return (
     <View style={styles.container}>
@@ -16,7 +19,24 @@ const App = () => {
 
       <View style={styles.buttonContainer}>
         <View style={styles.leftPad}>
-          <View style={styles.number}>{/* 숫자 버튼 */}</View>
+          <View style={styles.number}>
+            {/* 숫자 버튼 */}
+            <Button
+              title="1"
+              onPress={() => {}}
+              buttonStyle={{ width, height: width }}
+            />
+            <Button
+              title="2"
+              onPress={() => {}}
+              buttonStyle={{ width, height: width * 2 }}
+            />
+            <Button
+              title="3"
+              onPress={() => {}}
+              buttonStyle={{ width: width * 2, height: width }}
+            />
+          </View>
           <View style={styles.bottom}>{/* 0, = 버튼 */}</View>
         </View>
 
