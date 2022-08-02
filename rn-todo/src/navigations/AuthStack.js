@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import SignInScreen from '../screens/SignInScreen';
 import ListScreen from '../screens/ListScreen';
-import { WHITE } from '../colors';
+import { PRIMARY, WHITE } from '../colors';
 
 const Stack = createNativeStackNavigator();
 
@@ -19,6 +19,10 @@ const AuthStack = () => {
         component={ListScreen}
         options={{
           title: 'TODO List',
+          headerTintColor: PRIMARY.DEFAULT,
+          headerTitleStyle: {
+            fontWeight: '700',
+          },
         }}
       />
       <Stack.Screen
