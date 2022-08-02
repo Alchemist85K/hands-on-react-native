@@ -1,4 +1,5 @@
-import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
+import FastImage from '../components/FastImage';
 import { useUserState } from '../contexts/UserContext';
 import { signOut } from '../api/auth';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -34,7 +35,7 @@ const ProfileScreen = () => {
             user.photoURL || { backgroundColor: GRAY.DEFAULT },
           ]}
         >
-          <Image source={{ uri: user.photoURL }} style={styles.photo} />
+          <FastImage source={{ uri: user.photoURL }} style={styles.photo} />
           <Pressable
             style={styles.editButton}
             onPress={() => console.log('UPDATE')}
