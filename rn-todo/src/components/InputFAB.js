@@ -10,11 +10,12 @@ import {
 import { BLACK, PRIMARY, WHITE } from '../colors';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useEffect, useRef, useState } from 'react';
+import PropTypes from 'prop-types';
 
 const BOTTOM = 30;
 const BUTTON_WIDTH = 60;
 
-const InputFAB = () => {
+const InputFAB = ({ onInsert }) => {
   const [text, setText] = useState('');
   const [isOpened, setIsOpened] = useState(false);
   const inputRef = useRef();
@@ -84,6 +85,13 @@ const InputFAB = () => {
     }
   }, []);
 
+  const onPressInsert = () => {
+    const task = text.trim();
+    if (task) {
+      onInsert(task);
+    }
+  };
+
   return (
     <>
       <Animated.View
@@ -109,6 +117,7 @@ const InputFAB = () => {
           textContentType="none"
           keyboardAppearance="light"
           returnKeyType="done"
+          onSubmitEditing={onPressInsert}
         />
       </Animated.View>
 
@@ -135,6 +144,10 @@ const InputFAB = () => {
       </Animated.View>
     </>
   );
+};
+
+InputFAB.propTypes = {
+  onInsert: PropTypes.func.isRequired,
 };
 
 const styles = StyleSheet.create({
