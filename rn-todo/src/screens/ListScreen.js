@@ -49,10 +49,22 @@ const ListScreen = () => {
     save(newTodos);
   };
 
+  const onToggle = (id) => {
+    const newTodos = todos.map((item) =>
+      item.id === id ? { ...item, isDone: !item.isDone } : item
+    );
+    save(newTodos);
+  };
+
   return (
     <View style={{ flex: 1, paddingBottom: bottom }}>
       {todos.length ? (
-        <List data={todos} setIsBottom={setIsBottom} onDelete={onDelete} />
+        <List
+          data={todos}
+          setIsBottom={setIsBottom}
+          onDelete={onDelete}
+          onToggle={onToggle}
+        />
       ) : (
         <EmptyList />
       )}
