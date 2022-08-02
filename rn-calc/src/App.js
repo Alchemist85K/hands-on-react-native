@@ -29,6 +29,27 @@ const App = () => {
     }
   };
 
+  const calculate = () => {
+    let calculatedNumber = 0;
+    let operator = '';
+
+    formula.forEach((value) => {
+      if ([Operators.PLUS, Operators.MINUS].includes(value)) {
+        operator = value;
+      } else {
+        if (operator === Operators.PLUS) {
+          calculatedNumber += value;
+        } else if (operator === Operators.MINUS) {
+          calculatedNumber -= value;
+        } else {
+          calculatedNumber = value;
+        }
+      }
+    });
+    setResult(calculatedNumber);
+    setFormula([]);
+  };
+
   const onPressOperator = (operator) => {
     switch (operator) {
       case Operators.CLEAR:
@@ -36,6 +57,7 @@ const App = () => {
         setResult(0);
         return;
       case Operators.EQUAL:
+        calculate();
         return;
       default: {
         const last = formula[formula.length - 1];
