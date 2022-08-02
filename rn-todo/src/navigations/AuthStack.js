@@ -24,13 +24,6 @@ const AuthStack = () => {
           headerTitleStyle: {
             fontWeight: '700',
           },
-          headerTitle: ({ children, tintColor }) => {
-            return (
-              <Pressable onPress={() => console.log('test')}>
-                <Text style={{ color: tintColor }}>{children}</Text>
-              </Pressable>
-            );
-          },
         }}
       />
       <Stack.Screen
