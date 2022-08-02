@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import { useEffect, useLayoutEffect, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useState } from 'react';
 import {
   Alert,
   StyleSheet,
@@ -39,7 +39,7 @@ const ImagePickerScreen = () => {
     })();
   }, [navigation, requestPermission]);
 
-  const getPhotos = async () => {
+  const getPhotos = useCallback(async () => {
     const options = {
       first: 30,
       sortBy: [MediaLibrary.SortBy.creationTime],
@@ -50,13 +50,13 @@ const ImagePickerScreen = () => {
       setPhotos((prev) => [...prev, ...assets]);
       setListInfo({ endCursor, hasNextPage });
     }
-  };
+  }, [listInfo.hasNextPage]);
 
   useEffect(() => {
     if (status?.granted) {
       getPhotos();
     }
-  }, [status?.granted]);
+  }, [getPhotos, status?.granted]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
