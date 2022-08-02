@@ -7,6 +7,7 @@ import Button from '../components/Button';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import SafeInputView from '../components/SafeInputView';
 import TextButton from '../components/TextButton';
+import HR from '../components/HR';
 
 const SignInScreen = () => {
   const navigation = useNavigation();
@@ -60,6 +61,8 @@ const SignInScreen = () => {
           isLoading={isLoading}
           styles={{ container: { marginTop: 20 } }}
         />
+
+        <HR text={'OR'} styles={{ container: { marginVertical: 30 } }} />
 
         <TextButton
           title={'회원가입'}
