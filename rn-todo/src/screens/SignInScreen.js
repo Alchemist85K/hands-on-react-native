@@ -3,7 +3,7 @@ import { Image, StyleSheet, Text, View } from 'react-native';
 const SignInScreen = () => {
   return (
     <View style={styles.container}>
-      <Image source={require('../../assets/test.png')} style={styles.image} />
+      <Image source={require('../../assets/main.png')} style={styles.image} />
       <Text>SignInScreen</Text>
     </View>
   );
@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: 200,
-    height: 300,
+    height: 200,
   },
 });
 
