@@ -16,6 +16,7 @@ import { useActionSheet } from '@expo/react-native-action-sheet';
 import { useUserState } from '../contexts/UserContext';
 import DangerAlert, { AlertTypes } from './DangerAlert';
 import { deletePost } from '../api/post';
+import event, { EventTypes } from '../event';
 
 const ActionSheetOptions = {
   options: ['삭제', '수정', '취소'],
@@ -48,6 +49,7 @@ const PostItem = memo(({ post }) => {
         onConfirm={async () => {
           try {
             await deletePost(post.id);
+            event.emit(EventTypes.DELETE, { id: post.id });
           } catch (e) {
             Alert.alert('글 삭제에 실패했습니다.');
             onClose();
