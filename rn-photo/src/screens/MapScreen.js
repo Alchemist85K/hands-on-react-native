@@ -18,8 +18,8 @@ const MapScreen = () => {
           },
         }}
         iconVisible={false}
-        onPress={(data) => {
-          console.log(data);
+        onPress={(data, detail) => {
+          console.log(data, detail);
         }}
       />
     </View>
