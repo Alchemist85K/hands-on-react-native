@@ -9,6 +9,7 @@ const ListScreen = () => {
   const { top } = useSafeAreaInsets();
 
   const [data, setData] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
   const isLoadingRef = useRef(false);
   const lastRef = useRef(null);
 
@@ -24,13 +25,25 @@ const ListScreen = () => {
     }
   }, []);
 
+  const refetch = async () => {
+    setRefreshing(true);
+    lastRef.current = null;
+    await getList();
+    setRefreshing(false);
+  };
+
   useEffect(() => {
     getList();
   }, [getList]);
 
   return (
     <View style={[styles.container, { paddingTop: top }]}>
-      <PostList data={data} fetchNextPage={getList} />
+      <PostList
+        data={data}
+        fetchNextPage={getList}
+        refreshing={refreshing}
+        refetch={refetch}
+      />
     </View>
   );
 };
