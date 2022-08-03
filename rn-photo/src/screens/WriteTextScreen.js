@@ -14,6 +14,7 @@ import FastImage from '../components/FastImage';
 import LocationSearch from '../components/LocationSearch';
 import { uploadPhoto } from '../api/storage';
 import { useUserState } from '../contexts/UserContext';
+import { createPost } from '../api/post';
 
 const MAX_TEXT_LENGTH = 50;
 
@@ -46,12 +47,15 @@ const WriteTextScreen = () => {
       const photos = await Promise.all(
         photoUris.map((uri) => uploadPhoto({ uri, uid: user.uid }))
       );
-      console.log(photos);
+
+      await createPost({ photos, location, text, user });
+
+      navigation.goBack();
     } catch (e) {
       Alert.alert('글 작성 실패', e.message);
+      setIsLoading(false);
     }
-    setIsLoading(false);
-  }, [photoUris, user.uid]);
+  }, [photoUris, user, location, text, navigation]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
