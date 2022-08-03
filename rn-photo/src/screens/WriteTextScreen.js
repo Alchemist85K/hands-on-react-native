@@ -36,7 +36,9 @@ const WriteTextScreen = () => {
 
   const onSubmit = useCallback(async () => {
     setIsLoading(true);
-    setIsLoading(false);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
   }, []);
 
   useLayoutEffect(() => {
@@ -70,6 +72,7 @@ const WriteTextScreen = () => {
           textContentType="none"
           multiline={true}
           blurOnSubmit={true}
+          editable={!isLoading}
         />
         <Text style={styles.inputLength}>
           {text.length} / {MAX_TEXT_LENGTH}
