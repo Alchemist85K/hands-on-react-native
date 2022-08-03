@@ -1,5 +1,6 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
 import {
+  Alert,
   StyleSheet,
   Text,
   TextInput,
@@ -11,6 +12,8 @@ import { useCallback, useEffect, useLayoutEffect, useState } from 'react';
 import HeaderRight from '../components/HeaderRight';
 import FastImage from '../components/FastImage';
 import LocationSearch from '../components/LocationSearch';
+import { uploadPhoto } from '../api/storage';
+import { useUserState } from '../contexts/UserContext';
 
 const MAX_TEXT_LENGTH = 50;
 
@@ -18,6 +21,7 @@ const WriteTextScreen = () => {
   const navigation = useNavigation();
   const { params } = useRoute();
   const width = useWindowDimensions().width / 4;
+  const [user] = useUserState();
 
   const [photoUris, setPhotoUris] = useState([]);
   const [text, setText] = useState('');
@@ -38,10 +42,16 @@ const WriteTextScreen = () => {
 
   const onSubmit = useCallback(async () => {
     setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 2000);
-  }, []);
+    try {
+      const photos = await Promise.all(
+        photoUris.map((uri) => uploadPhoto({ uri, uid: user.uid }))
+      );
+      console.log(photos);
+    } catch (e) {
+      Alert.alert('글 작성 실패', e.message);
+    }
+    setIsLoading(false);
+  }, [photoUris, user.uid]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
