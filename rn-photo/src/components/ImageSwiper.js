@@ -12,16 +12,16 @@ const ImageSwiper = ({ photos }) => {
       dot={<View style={styles.dot} />}
       activeDot={<View style={styles.activeDot} />}
     >
-      {photos.map(({ uri }, idx) => (
+      {photos.map((photo, idx) => (
         <View key={idx} style={styles.photo}>
           <FastImage
-            source={{ uri }}
+            source={{ uri: photo.uri ?? photo }}
             style={StyleSheet.absoluteFill}
             resizeMode="cover"
           />
           <BlurView intensity={Platform.select({ ios: 10, android: 100 })}>
             <FastImage
-              source={{ uri }}
+              source={{ uri: photo.uri ?? photo }}
               style={styles.photo}
               resizeMode="contain"
             />
