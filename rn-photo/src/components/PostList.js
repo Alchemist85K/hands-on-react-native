@@ -1,26 +1,21 @@
 import { FlatList, StyleSheet, View } from 'react-native';
 import PostItem from './PostItem';
 import { GRAY } from '../colors';
-import PropTypes from 'prop-types';
+import usePosts from '../hooks/usePosts';
 
-const PostList = ({ data, fetchNextPage, refreshing, refetch }) => {
+const PostList = () => {
+  const { data, fetchNextPage, refetch, refetching } = usePosts();
+
   return (
     <FlatList
       data={data}
       renderItem={({ item }) => <PostItem post={item} />}
       ItemSeparatorComponent={() => <View style={styles.separator}></View>}
       onEndReached={fetchNextPage}
-      refreshing={refreshing}
+      refreshing={refetching}
       onRefresh={refetch}
     />
   );
-};
-
-PostList.propTypes = {
-  data: PropTypes.array.isRequired,
-  fetchNextPage: PropTypes.func,
-  refreshing: PropTypes.bool,
-  refetch: PropTypes.func,
 };
 
 const styles = StyleSheet.create({
