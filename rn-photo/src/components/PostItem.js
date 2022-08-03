@@ -1,4 +1,5 @@
 import {
+  Alert,
   Pressable,
   StyleSheet,
   Text,
@@ -10,9 +11,11 @@ import ImageSwiper from './ImageSwiper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import PropTypes from 'prop-types';
 import { DANGER, GRAY, PRIMARY, WHITE } from '../colors';
-import { memo } from 'react';
+import { memo, useState } from 'react';
 import { useActionSheet } from '@expo/react-native-action-sheet';
 import { useUserState } from '../contexts/UserContext';
+import DangerAlert, { AlertTypes } from './DangerAlert';
+import { deletePost } from '../api/post';
 
 const ActionSheetOptions = {
   options: ['삭제', '수정', '취소'],
@@ -26,52 +29,77 @@ const PostItem = memo(({ post }) => {
   const [user] = useUserState();
   const { showActionSheetWithOptions } = useActionSheet();
 
+  const [visible, setVisible] = useState(false);
+
   const onPressActionSheet = (idx) => {
-    console.log(idx);
+    if (idx === 0) {
+      setVisible(true);
+    }
   };
 
+  const onClose = () => setVisible(false);
+
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <View style={styles.profile}>
-          <FastImage
-            source={{ uri: post.user.photoURL }}
-            style={styles.profilePhoto}
-          />
-          <Text style={styles.nickname}>{post.user.displayName}</Text>
+    <>
+      <DangerAlert
+        alertType={AlertTypes.DELETE_POST}
+        visible={visible}
+        onClose={onClose}
+        onConfirm={async () => {
+          try {
+            await deletePost(post.id);
+          } catch (e) {
+            Alert.alert('글 삭제에 실패했습니다.');
+            onClose();
+          }
+        }}
+      />
+
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <View style={styles.profile}>
+            <FastImage
+              source={{ uri: post.user.photoURL }}
+              style={styles.profilePhoto}
+            />
+            <Text style={styles.nickname}>{post.user.displayName}</Text>
+          </View>
+
+          {post.user.uid === user.uid && (
+            <Pressable
+              hitSlop={10}
+              onPress={() =>
+                showActionSheetWithOptions(
+                  ActionSheetOptions,
+                  onPressActionSheet
+                )
+              }
+            >
+              <MaterialCommunityIcons
+                name="dots-horizontal"
+                size={24}
+                color={GRAY.DARK}
+              />
+            </Pressable>
+          )}
         </View>
 
-        {post.user.uid === user.uid && (
-          <Pressable
-            hitSlop={10}
-            onPress={() =>
-              showActionSheetWithOptions(ActionSheetOptions, onPressActionSheet)
-            }
-          >
-            <MaterialCommunityIcons
-              name="dots-horizontal"
-              size={24}
-              color={GRAY.DARK}
-            />
-          </Pressable>
-        )}
-      </View>
+        <View style={{ width, height: width }}>
+          <ImageSwiper photos={post.photos} />
+        </View>
 
-      <View style={{ width, height: width }}>
-        <ImageSwiper photos={post.photos} />
-      </View>
+        <View style={styles.location}>
+          <MaterialCommunityIcons
+            name="map-marker"
+            size={24}
+            color={PRIMARY.DEFAULT}
+          />
+          <Text>{post.location}</Text>
+        </View>
 
-      <View style={styles.location}>
-        <MaterialCommunityIcons
-          name="map-marker"
-          size={24}
-          color={PRIMARY.DEFAULT}
-        />
-        <Text>{post.location}</Text>
+        <Text style={styles.text}>{post.text}</Text>
       </View>
-
-      <Text style={styles.text}>{post.text}</Text>
-    </View>
+    </>
   );
 });
 
