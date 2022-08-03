@@ -76,6 +76,8 @@ const WriteTextScreen = () => {
           }}
           query={{ key: MAP_KEY, language: 'ko' }}
           debounce={400}
+          enablePoweredByContainer={false}
+          textInputProps={{ editable: !isLoading }}
         />
 
         <View style={styles.locationIcon}>
