@@ -1,22 +1,60 @@
-import { StyleSheet, Text, useWindowDimensions, View } from 'react-native';
+import {
+  Pressable,
+  StyleSheet,
+  Text,
+  useWindowDimensions,
+  View,
+} from 'react-native';
 import FastImage from './FastImage';
 import ImageSwiper from './ImageSwiper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import PropTypes from 'prop-types';
-import { PRIMARY, WHITE } from '../colors';
+import { DANGER, GRAY, PRIMARY, WHITE } from '../colors';
 import { memo } from 'react';
+import { useActionSheet } from '@expo/react-native-action-sheet';
+import { useUserState } from '../contexts/UserContext';
+
+const ActionSheetOptions = {
+  options: ['삭제', '수정', '취소'],
+  cancelButtonIndex: 2,
+  destructiveButtonIndex: 0,
+  destructiveColor: DANGER.DEFAULT,
+};
 
 const PostItem = memo(({ post }) => {
   const width = useWindowDimensions().width;
+  const [user] = useUserState();
+  const { showActionSheetWithOptions } = useActionSheet();
+
+  const onPressActionSheet = (idx) => {
+    console.log(idx);
+  };
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <FastImage
-          source={{ uri: post.user.photoURL }}
-          style={styles.profilePhoto}
-        />
-        <Text style={styles.nickname}>{post.user.displayName}</Text>
+        <View style={styles.profile}>
+          <FastImage
+            source={{ uri: post.user.photoURL }}
+            style={styles.profilePhoto}
+          />
+          <Text style={styles.nickname}>{post.user.displayName}</Text>
+        </View>
+
+        {post.user.uid === user.uid && (
+          <Pressable
+            hitSlop={10}
+            onPress={() =>
+              showActionSheetWithOptions(ActionSheetOptions, onPressActionSheet)
+            }
+          >
+            <MaterialCommunityIcons
+              name="dots-horizontal"
+              size={24}
+              color={GRAY.DARK}
+            />
+          </Pressable>
+        )}
       </View>
 
       <View style={{ width, height: width }}>
@@ -53,6 +91,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 10,
     paddingBottom: 10,
+    justifyContent: 'space-between',
+  },
+  profile: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   profilePhoto: {
     width: 40,
