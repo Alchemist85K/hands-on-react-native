@@ -20,7 +20,7 @@ import FastImage from '../components/FastImage';
 import LocationSearch from '../components/LocationSearch';
 import { uploadPhoto } from '../api/storage';
 import { useUserState } from '../contexts/UserContext';
-import { createPost } from '../api/post';
+import { createPost, updatePost } from '../api/post';
 import event, { EventTypes } from '../event';
 
 const MAX_TEXT_LENGTH = 50;
@@ -60,19 +60,23 @@ const WriteTextScreen = () => {
   const onSubmit = useCallback(async () => {
     setIsLoading(true);
     try {
-      const photos = await Promise.all(
-        photoUris.map((uri) => uploadPhoto({ uri, uid: user.uid }))
-      );
+      if (params?.photoUris) {
+        const photos = await Promise.all(
+          photoUris.map((uri) => uploadPhoto({ uri, uid: user.uid }))
+        );
 
-      await createPost({ photos, location, text, user });
-      event.emit(EventTypes.REFRESH);
-
+        await createPost({ photos, location, text, user });
+        event.emit(EventTypes.REFRESH);
+      } else if (params?.post) {
+        const { post } = params;
+        await updatePost({ ...post, location, text });
+      }
       navigation.goBack();
     } catch (e) {
-      Alert.alert('글 작성 실패', e.message);
+      Alert.alert(e.message);
       setIsLoading(false);
     }
-  }, [photoUris, user, location, text, navigation]);
+  }, [photoUris, user, location, text, navigation, params]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
