@@ -2,13 +2,22 @@ import { StyleSheet, View } from 'react-native';
 import MapView from 'react-native-maps';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import LocationSearch from '../components/LocationSearch';
+import { useState } from 'react';
 
 const MapScreen = () => {
   const { top } = useSafeAreaInsets();
 
+  const [location, setLocation] = useState({
+    latitudeDelta: 0.1,
+    longitudeDelta: 0.1,
+  });
+
   return (
     <View style={styles.container}>
-      <MapView style={styles.map}></MapView>
+      <MapView
+        style={styles.map}
+        region={location.latitude && location.longitude ? location : null}
+      ></MapView>
 
       <LocationSearch
         styles={{
@@ -19,7 +28,18 @@ const MapScreen = () => {
         }}
         iconVisible={false}
         onPress={(data, detail) => {
-          console.log(data, detail);
+          const {
+            geometry: {
+              location: { lat, lng },
+            },
+          } = detail;
+
+          setLocation((prev) => ({
+            ...prev,
+            name: data.description,
+            latitude: lat,
+            longitude: lng,
+          }));
         }}
       />
     </View>
