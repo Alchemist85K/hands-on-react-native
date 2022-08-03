@@ -6,6 +6,7 @@ import SelectPhotosScreen from '../screens/SelectPhotosScreen';
 import UpdateProfileScreen from '../screens/UpdateProfileScreen';
 import HeaderLeft from '../components/HeaderLeft';
 import ImagePickerScreen from '../screens/ImagePickerScreen';
+import WriteTextScreen from '../screens/WriteTextScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -35,6 +36,7 @@ const MainStack = () => {
         name={MainRoutes.IMAGE_PICKER}
         component={ImagePickerScreen}
       />
+      <Stack.Screen name={MainRoutes.WRITE_TEXT} component={WriteTextScreen} />
     </Stack.Navigator>
   );
 };
