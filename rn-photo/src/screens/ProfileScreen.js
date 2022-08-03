@@ -61,7 +61,7 @@ const ProfileScreen = () => {
       </View>
 
       <View style={styles.listContainer}>
-        <PostList />
+        <PostList isMyPost={true} />
       </View>
     </View>
   );

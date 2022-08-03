@@ -4,9 +4,14 @@ import { GRAY } from '../colors';
 import usePosts from '../hooks/usePosts';
 import { useEffect } from 'react';
 import event, { EventTypes } from '../event';
+import { useUserState } from '../contexts/UserContext';
+import PropTypes from 'prop-types';
 
-const PostList = () => {
-  const { data, fetchNextPage, refetch, refetching } = usePosts();
+const PostList = ({ isMyPost }) => {
+  const [user] = useUserState();
+  const { data, fetchNextPage, refetch, refetching } = usePosts(
+    isMyPost && user.uid
+  );
 
   useEffect(() => {
     event.addListener(EventTypes.REFRESH, refetch);
@@ -24,6 +29,10 @@ const PostList = () => {
       onRefresh={refetch}
     />
   );
+};
+
+PostList.propTypes = {
+  isMyPost: PropTypes.bool,
 };
 
 const styles = StyleSheet.create({

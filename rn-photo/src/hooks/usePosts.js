@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { getPosts } from '../api/post';
 
-const usePosts = () => {
+const usePosts = (uid) => {
   const [data, setData] = useState([]);
   const [refetching, setRefetching] = useState(false);
 
@@ -11,14 +11,14 @@ const usePosts = () => {
   const fetchNextPage = useCallback(async () => {
     if (!isLoadingRef.current) {
       isLoadingRef.current = true;
-      const { list, last } = await getPosts({ after: lastRef.current });
+      const { list, last } = await getPosts({ after: lastRef.current, uid });
       if (list.length > 0) {
         setData((prev) => (lastRef.current ? [...prev, ...list] : list));
         lastRef.current = last;
       }
       isLoadingRef.current = false;
     }
-  }, []);
+  }, [uid]);
 
   const refetch = async () => {
     setRefetching(true);
