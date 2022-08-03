@@ -8,7 +8,13 @@ import {
   View,
 } from 'react-native';
 import { GRAY, WHITE } from '../colors';
-import { useCallback, useEffect, useLayoutEffect, useState } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useState,
+  useRef,
+} from 'react';
 import HeaderRight from '../components/HeaderRight';
 import FastImage from '../components/FastImage';
 import LocationSearch from '../components/LocationSearch';
@@ -28,13 +34,22 @@ const WriteTextScreen = () => {
   const [photoUris, setPhotoUris] = useState([]);
   const [text, setText] = useState('');
   const [location, setLocation] = useState('');
+  const locationRef = useRef(null);
 
   const [disabled, setDisabled] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (params) {
-      setPhotoUris(params.photoUris ?? []);
+      const { photoUris, post } = params;
+      if (photoUris) {
+        setPhotoUris(params.photoUris);
+      } else if (post) {
+        setPhotoUris(post.photos);
+        setText(post.text);
+        setLocation(post.location);
+        locationRef.current?.setAddressText(post.location);
+      }
     }
   }, [params]);
 
@@ -78,6 +93,7 @@ const WriteTextScreen = () => {
       </View>
 
       <LocationSearch
+        ref={locationRef}
         onPress={({ description }) => setLocation(description)}
         isLoading={isLoading}
         isSelected={!!location}

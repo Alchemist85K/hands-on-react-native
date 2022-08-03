@@ -4,37 +4,43 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { GRAY, PRIMARY } from '../colors';
 import { MAP_KEY } from '../../env';
 import PropTypes from 'prop-types';
+import { forwardRef } from 'react';
 
-const LocationSearch = ({ styles, onPress, isLoading, isSelected }) => {
-  return (
-    <View style={[defaultStyles.container, styles?.container]}>
-      <GooglePlacesAutocomplete
-        placeholder="Location"
-        styles={{
-          container: { flex: 0 },
-          textInput: { paddingLeft: 30 },
-        }}
-        onPress={onPress}
-        onFail={(e) => {
-          // eslint-disable-next-line no-console
-          console.log('GooglePlacesAutocomplete onFail : ', e);
-        }}
-        query={{ key: MAP_KEY, language: 'ko' }}
-        debounce={400}
-        enablePoweredByContainer={false}
-        textInputProps={{ editable: !isLoading }}
-      />
-
-      <View style={[defaultStyles.icon, styles?.icon]}>
-        <MaterialCommunityIcons
-          name="map-marker"
-          size={20}
-          color={isSelected ? PRIMARY.DEFAULT : GRAY.LIGHT}
+const LocationSearch = forwardRef(
+  ({ styles, onPress, isLoading, isSelected }, ref) => {
+    return (
+      <View style={[defaultStyles.container, styles?.container]}>
+        <GooglePlacesAutocomplete
+          ref={ref}
+          placeholder="Location"
+          styles={{
+            container: { flex: 0 },
+            textInput: { paddingLeft: 30 },
+          }}
+          onPress={onPress}
+          onFail={(e) => {
+            // eslint-disable-next-line no-console
+            console.log('GooglePlacesAutocomplete onFail : ', e);
+          }}
+          query={{ key: MAP_KEY, language: 'ko' }}
+          debounce={400}
+          enablePoweredByContainer={false}
+          textInputProps={{ editable: !isLoading }}
         />
+
+        <View style={[defaultStyles.icon, styles?.icon]}>
+          <MaterialCommunityIcons
+            name="map-marker"
+            size={20}
+            color={isSelected ? PRIMARY.DEFAULT : GRAY.LIGHT}
+          />
+        </View>
       </View>
-    </View>
-  );
-};
+    );
+  }
+);
+
+LocationSearch.displayName = 'LocationSearch';
 
 LocationSearch.defaultProps = {
   isLoading: false,
