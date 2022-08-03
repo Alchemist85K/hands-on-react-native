@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import { forwardRef } from 'react';
 
 const LocationSearch = forwardRef(
-  ({ styles, onPress, isLoading, isSelected }, ref) => {
+  ({ styles, onPress, isLoading, isSelected, iconVisible }, ref) => {
     return (
       <View style={[defaultStyles.container, styles?.container]}>
         <GooglePlacesAutocomplete
@@ -15,7 +15,7 @@ const LocationSearch = forwardRef(
           placeholder="Location"
           styles={{
             container: { flex: 0 },
-            textInput: { paddingLeft: 30 },
+            textInput: { paddingLeft: iconVisible ? 30 : 10 },
           }}
           onPress={onPress}
           onFail={(e) => {
@@ -28,13 +28,15 @@ const LocationSearch = forwardRef(
           textInputProps={{ editable: !isLoading }}
         />
 
-        <View style={[defaultStyles.icon, styles?.icon]}>
-          <MaterialCommunityIcons
-            name="map-marker"
-            size={20}
-            color={isSelected ? PRIMARY.DEFAULT : GRAY.LIGHT}
-          />
-        </View>
+        {iconVisible && (
+          <View style={[defaultStyles.icon, styles?.icon]}>
+            <MaterialCommunityIcons
+              name="map-marker"
+              size={20}
+              color={isSelected ? PRIMARY.DEFAULT : GRAY.LIGHT}
+            />
+          </View>
+        )}
       </View>
     );
   }
@@ -45,6 +47,7 @@ LocationSearch.displayName = 'LocationSearch';
 LocationSearch.defaultProps = {
   isLoading: false,
   isSelected: false,
+  iconVisible: true,
 };
 
 LocationSearch.propTypes = {
@@ -52,6 +55,7 @@ LocationSearch.propTypes = {
   onPress: PropTypes.func.isRequired,
   isLoading: PropTypes.bool,
   isSelected: PropTypes.bool,
+  iconVisible: PropTypes.bool,
 };
 
 const defaultStyles = StyleSheet.create({
