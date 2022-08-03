@@ -6,7 +6,7 @@ import {
   useWindowDimensions,
   View,
 } from 'react-native';
-import { GRAY, WHITE } from '../colors';
+import { GRAY, WHITE, PRIMARY } from '../colors';
 import { useCallback, useEffect, useLayoutEffect, useState } from 'react';
 import HeaderRight from '../components/HeaderRight';
 import FastImage from '../components/FastImage';
@@ -23,6 +23,7 @@ const WriteTextScreen = () => {
 
   const [photoUris, setPhotoUris] = useState([]);
   const [text, setText] = useState('');
+  const [location, setLocation] = useState('');
 
   const [disabled, setDisabled] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
@@ -34,8 +35,8 @@ const WriteTextScreen = () => {
   }, [params]);
 
   useEffect(() => {
-    setDisabled(isLoading || !text);
-  }, [isLoading, text]);
+    setDisabled(isLoading || !text || !location);
+  }, [isLoading, text, location]);
 
   const onSubmit = useCallback(async () => {
     setIsLoading(true);
@@ -69,7 +70,7 @@ const WriteTextScreen = () => {
             container: { flex: 0 },
             textInput: { paddingLeft: 30 },
           }}
-          onPress={(data) => console.log(data)}
+          onPress={(data) => setLocation(data.description)}
           onFail={(e) => {
             // eslint-disable-next-line no-console
             console.log('GooglePlacesAutocomplete onFail : ', e);
@@ -84,7 +85,7 @@ const WriteTextScreen = () => {
           <MaterialCommunityIcons
             name="map-marker"
             size={20}
-            color={GRAY.DARK}
+            color={location ? PRIMARY.DEFAULT : GRAY.LIGHT}
           />
         </View>
       </View>
