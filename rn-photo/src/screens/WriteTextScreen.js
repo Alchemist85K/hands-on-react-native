@@ -68,6 +68,7 @@ const WriteTextScreen = () => {
           autoCapitalize="none"
           autoCorrect={false}
           textContentType="none"
+          multiline={true}
         />
         <Text style={styles.inputLength}>
           {text.length} / {MAX_TEXT_LENGTH}
