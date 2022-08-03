@@ -6,13 +6,11 @@ import {
   useWindowDimensions,
   View,
 } from 'react-native';
-import { GRAY, WHITE, PRIMARY } from '../colors';
+import { GRAY, WHITE } from '../colors';
 import { useCallback, useEffect, useLayoutEffect, useState } from 'react';
 import HeaderRight from '../components/HeaderRight';
 import FastImage from '../components/FastImage';
-import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
-import { MAP_KEY } from '../../env';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import LocationSearch from '../components/LocationSearch';
 
 const MAX_TEXT_LENGTH = 50;
 
@@ -63,32 +61,11 @@ const WriteTextScreen = () => {
         ))}
       </View>
 
-      <View style={styles.location}>
-        <GooglePlacesAutocomplete
-          placeholder="Location"
-          styles={{
-            container: { flex: 0 },
-            textInput: { paddingLeft: 30 },
-          }}
-          onPress={(data) => setLocation(data.description)}
-          onFail={(e) => {
-            // eslint-disable-next-line no-console
-            console.log('GooglePlacesAutocomplete onFail : ', e);
-          }}
-          query={{ key: MAP_KEY, language: 'ko' }}
-          debounce={400}
-          enablePoweredByContainer={false}
-          textInputProps={{ editable: !isLoading }}
-        />
-
-        <View style={styles.locationIcon}>
-          <MaterialCommunityIcons
-            name="map-marker"
-            size={20}
-            color={location ? PRIMARY.DEFAULT : GRAY.LIGHT}
-          />
-        </View>
-      </View>
+      <LocationSearch
+        onPress={({ description }) => setLocation(description)}
+        isLoading={isLoading}
+        isSelected={!!location}
+      />
 
       <View>
         <TextInput
@@ -127,17 +104,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     color: GRAY.DARK,
     fontSize: 12,
-  },
-  location: {
-    paddingHorizontal: 20,
-    paddingVertical: 5,
-    borderBottomWidth: 0.5,
-    borderBottomColor: GRAY.LIGHT,
-  },
-  locationIcon: {
-    position: 'absolute',
-    left: 20,
-    top: 16,
   },
 });
 
