@@ -9,6 +9,7 @@ import DangerAlert, { AlertTypes } from '../components/DangerAlert';
 import { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { MainRoutes } from '../navigations/routes';
+import PostList from '../components/PostList';
 
 const ProfileScreen = () => {
   const navigation = useNavigation();
@@ -59,7 +60,9 @@ const ProfileScreen = () => {
         <Text style={styles.nickname}>{user.displayName || 'nickname'}</Text>
       </View>
 
-      <View style={styles.listContainer}></View>
+      <View style={styles.listContainer}>
+        <PostList />
+      </View>
     </View>
   );
 };
