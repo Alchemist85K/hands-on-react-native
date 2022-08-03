@@ -2,9 +2,17 @@ import { FlatList, StyleSheet, View } from 'react-native';
 import PostItem from './PostItem';
 import { GRAY } from '../colors';
 import usePosts from '../hooks/usePosts';
+import { useEffect } from 'react';
+import event, { EventTypes } from '../event';
 
 const PostList = () => {
   const { data, fetchNextPage, refetch, refetching } = usePosts();
+
+  useEffect(() => {
+    event.addListener(EventTypes.REFRESH, refetch);
+
+    return () => event.removeAllListeners();
+  }, [refetch]);
 
   return (
     <FlatList

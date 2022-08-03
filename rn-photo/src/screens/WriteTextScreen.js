@@ -15,6 +15,7 @@ import LocationSearch from '../components/LocationSearch';
 import { uploadPhoto } from '../api/storage';
 import { useUserState } from '../contexts/UserContext';
 import { createPost } from '../api/post';
+import event, { EventTypes } from '../event';
 
 const MAX_TEXT_LENGTH = 50;
 
@@ -49,6 +50,7 @@ const WriteTextScreen = () => {
       );
 
       await createPost({ photos, location, text, user });
+      event.emit(EventTypes.REFRESH);
 
       navigation.goBack();
     } catch (e) {
