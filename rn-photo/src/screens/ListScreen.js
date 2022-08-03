@@ -1,5 +1,5 @@
 import { StyleSheet, View } from 'react-native';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import { getPosts } from '../api/post';
 import PostList from '../components/PostList';
 import { WHITE } from '../colors';
@@ -9,17 +9,28 @@ const ListScreen = () => {
   const { top } = useSafeAreaInsets();
 
   const [data, setData] = useState([]);
+  const isLoadingRef = useRef(false);
+  const lastRef = useRef(null);
+
+  const getList = useCallback(async () => {
+    if (!isLoadingRef.current) {
+      isLoadingRef.current = true;
+      const { list, last } = await getPosts({ after: lastRef.current });
+      if (list.length > 0) {
+        setData((prev) => (lastRef.current ? [...prev, ...list] : list));
+        lastRef.current = last;
+      }
+      isLoadingRef.current = false;
+    }
+  }, []);
 
   useEffect(() => {
-    (async () => {
-      const list = await getPosts();
-      setData(list);
-    })();
-  }, []);
+    getList();
+  }, [getList]);
 
   return (
     <View style={[styles.container, { paddingTop: top }]}>
-      <PostList data={data} />
+      <PostList data={data} fetchNextPage={getList} />
     </View>
   );
 };

@@ -7,6 +7,7 @@ import {
   getDocs,
   orderBy,
   limit,
+  startAfter,
 } from 'firebase/firestore';
 
 export const createPost = async ({ photos, location, text, user }) => {
@@ -24,10 +25,21 @@ export const createPost = async ({ photos, location, text, user }) => {
   });
 };
 
-export const getPosts = async () => {
+export const getPosts = async ({ after }) => {
   const collectionRef = collection(getFirestore(), 'posts');
-  const option = query(collectionRef, orderBy('createdTs', 'desc'), limit(10));
+
+  const option = after
+    ? query(
+        collectionRef,
+        orderBy('createdTs', 'desc'),
+        startAfter(after),
+        limit(10)
+      )
+    : query(collectionRef, orderBy('createdTs', 'desc'), limit(10));
+
   const documentSnapshot = await getDocs(option);
-  const documents = documentSnapshot.docs.map((doc) => doc.data());
-  return documents;
+  const list = documentSnapshot.docs.map((doc) => doc.data());
+  const last = documentSnapshot.docs[documentSnapshot.docs.length - 1];
+
+  return { list, last };
 };
