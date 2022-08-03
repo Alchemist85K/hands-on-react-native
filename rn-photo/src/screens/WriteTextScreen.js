@@ -69,6 +69,7 @@ const WriteTextScreen = () => {
           autoCorrect={false}
           textContentType="none"
           multiline={true}
+          blurOnSubmit={true}
         />
         <Text style={styles.inputLength}>
           {text.length} / {MAX_TEXT_LENGTH}
