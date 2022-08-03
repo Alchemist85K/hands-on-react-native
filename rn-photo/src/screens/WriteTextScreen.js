@@ -69,7 +69,9 @@ const WriteTextScreen = () => {
         event.emit(EventTypes.REFRESH);
       } else if (params?.post) {
         const { post } = params;
-        await updatePost({ ...post, location, text });
+        const updatedPost = { ...post, location, text };
+        await updatePost(updatedPost);
+        event.emit(EventTypes.UPDATE, updatedPost);
       }
       navigation.goBack();
     } catch (e) {

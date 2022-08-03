@@ -9,16 +9,16 @@ import PropTypes from 'prop-types';
 
 const PostList = ({ isMyPost }) => {
   const [user] = useUserState();
-  const { data, fetchNextPage, refetch, refetching, deletePost } = usePosts(
-    isMyPost && user.uid
-  );
+  const { data, fetchNextPage, refetch, refetching, deletePost, updatePost } =
+    usePosts(isMyPost && user.uid);
 
   useEffect(() => {
     event.addListener(EventTypes.REFRESH, refetch);
     event.addListener(EventTypes.DELETE, deletePost);
+    event.addListener(EventTypes.UPDATE, updatePost);
 
     return () => event.removeAllListeners();
-  }, [refetch, deletePost]);
+  }, [refetch, deletePost, updatePost]);
 
   return (
     <FlatList
