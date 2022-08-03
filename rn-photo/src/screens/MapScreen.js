@@ -1,5 +1,5 @@
 import { StyleSheet, View } from 'react-native';
-import MapView from 'react-native-maps';
+import MapView, { Marker } from 'react-native-maps';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import LocationSearch from '../components/LocationSearch';
 import { useState } from 'react';
@@ -17,7 +17,11 @@ const MapScreen = () => {
       <MapView
         style={styles.map}
         region={location.latitude && location.longitude ? location : null}
-      ></MapView>
+      >
+        {location.latitude && location.longitude && (
+          <Marker coordinate={location} title={location.name} />
+        )}
+      </MapView>
 
       <LocationSearch
         styles={{
