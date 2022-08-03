@@ -6,6 +6,7 @@ const usePostsByLocation = (location) => {
 
   const isLoadingRef = useRef(null);
   const lastRef = useRef(null);
+  const locationRef = useRef('');
 
   const fetchNextPage = useCallback(async () => {
     if (!isLoadingRef.current) {
@@ -18,14 +19,17 @@ const usePostsByLocation = (location) => {
       const photos = list.map((item) => item.photos).flat();
       setData((prev) => (lastRef.current ? [...prev, ...photos] : photos));
       lastRef.current = last;
-
+      locationRef.current = location;
       isLoadingRef.current = false;
     }
   }, [location]);
 
   useEffect(() => {
+    if (locationRef.current !== location) {
+      lastRef.current = null;
+    }
     fetchNextPage();
-  }, [fetchNextPage]);
+  }, [fetchNextPage, location]);
 
   return { data, fetchNextPage };
 };
