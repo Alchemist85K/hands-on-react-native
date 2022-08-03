@@ -1,4 +1,11 @@
-import { collection, getFirestore, doc, setDoc } from 'firebase/firestore';
+import {
+  collection,
+  getFirestore,
+  doc,
+  setDoc,
+  query,
+  getDocs,
+} from 'firebase/firestore';
 
 export const createPost = async ({ photos, location, text, user }) => {
   const { uid, displayName, photoURL } = user;
@@ -13,4 +20,12 @@ export const createPost = async ({ photos, location, text, user }) => {
     user: { uid, displayName, photoURL },
     createdTs: Date.now(),
   });
+};
+
+export const getPosts = async () => {
+  const collectionRef = collection(getFirestore(), 'posts');
+  const option = query(collectionRef);
+  const documentSnapshot = await getDocs(option);
+  const documents = documentSnapshot.docs.map((doc) => doc.data());
+  return documents;
 };
