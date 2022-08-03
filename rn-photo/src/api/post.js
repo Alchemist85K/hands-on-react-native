@@ -86,3 +86,28 @@ export const updatePost = async (post) => {
     throw new Error('글 수정 실패');
   }
 };
+
+export const getPostsByLocation = async ({ after, location }) => {
+  const collectionRef = collection(getFirestore(), 'posts');
+
+  const option = after
+    ? query(
+        collectionRef,
+        where('location', '==', location),
+        orderBy('createdTs', 'desc'),
+        startAfter(after),
+        limit(10)
+      )
+    : query(
+        collectionRef,
+        where('location', '==', location),
+        orderBy('createdTs', 'desc'),
+        limit(10)
+      );
+
+  const documentSnapshot = await getDocs(option);
+  const list = documentSnapshot.docs.map((doc) => doc.data());
+  const last = documentSnapshot.docs[documentSnapshot.docs.length - 1];
+
+  return { list, last };
+};
