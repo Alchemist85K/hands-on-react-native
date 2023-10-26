@@ -10,6 +10,8 @@
 
 ## 수정 내용
 
+- 2023-10-26
+  - [Firebase 10 부터 로그인 유지 문제 수정](https://github.com/Alchemist85K/hands-on-react-native/commit/ce7a78)
 - 2023-03-21
   - [Expo 48 부터 Firebase onAuthStateChanged 적용 안되는 문제 수정](https://github.com/Alchemist85K/hands-on-react-native/commit/4a3c849)
 - 2023-04-24
